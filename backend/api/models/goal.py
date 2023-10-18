@@ -1,15 +1,21 @@
 from flask_sqlalchemy import SQLAlchemy
 
-db = SQLAlchemy()
+db_user_data = SQLAlchemy()
 
 
-class Goal(db.Model):
+class Goal(db_user_data.Model):
+    __bind_key__ = "user_data"  # Specify the database key (matches the config key)
+
     __tablename__ = "goals"
 
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("user_profiles.id"), nullable=False)
-    goal_type = db.Column(db.String(50), nullable=False)
-    attributes = db.Column(db.JSON)  # Assuming JSON data for attributes
+    id = db_user_data.Column(db_user_data.Integer, primary_key=True)
+    user_id = db_user_data.Column(
+        db_user_data.Integer,
+        db_user_data.ForeignKey("user_profiles.id"),
+        nullable=False,
+    )
+    goal_type = db_user_data.Column(db_user_data.String(50), nullable=False)
+    attributes = db_user_data.Column(db_user_data.JSON)
     # Add other fields as needed
 
     def __init__(self, user_id, goal_type, attributes):
