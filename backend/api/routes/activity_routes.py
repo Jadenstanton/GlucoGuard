@@ -20,12 +20,22 @@ def create_activity():
     if user is None:
         return jsonify({"message": "User not found."}), 404
 
-    result = activity_controller.create_activity(user.id, data)
-    return jsonify(result)
+    activity = activity_controller.create_activity(user.id, data)
+
+    try:
+        activity_controller.db.session.add(activity)
+        activity_controller.db.session.commit()
+        return (
+            jsonify({"message": "Activity created successfully", "data": activity.id}),
+            201,
+        )
+    except Exception as e:
+        activity_controller.db.session.rollback()
+        return jsonify({"message": "Failed to create activity"}), 500
 
 
 @activity_bp.route("/delete/<int:activity_id>", methods=["DELETE"])
-def delete_activty(activity_id):
+def delete_activity(activity_id):
     user_id = request.args.get("user_id")
 
     if user_id is None:
@@ -36,8 +46,15 @@ def delete_activty(activity_id):
     if user is None:
         return jsonify({"message": "User not found"}), 404
 
-    result = activity_controller.delete_activity(user.id, activity_id)
-    return jsonify(result)
+    activity = activity_controller.delete_activity(user.id, activity_id)
+
+    try:
+        activity_controller.db.session.delete(activity)
+        activity_controller.db.session.commit()
+        return jsonify({"message": "Activity deleted successfully"}), 200
+    except Exception as e:
+        activity_controller.db.session.rollback()
+        return jsonify({"message": "Failed to delete activity"}), 500
 
 
 @activity_bp.route("/update/<int:activity_id>", methods=["PUT"])
@@ -53,5 +70,14 @@ def update_activity(activity_id):
     if user is None:
         return jsonify({"message": "User not found"}), 404
 
-    result = activity_controller.update_activity(user.id, activity_id, data)
-    return jsonify(result)
+    activity = activity_controller.update_activity(user.id, activity_id, data)
+
+    try:
+        activity_controller.db.session.commit()
+        return (
+            jsonify({"message": "Activity updated successfully", "data": activity.id}),
+            200,
+        )
+    except Exception as e:
+        activity_controller.db.session.rollback()
+        return jsonify({"message": "Failed to update activity"}), 500

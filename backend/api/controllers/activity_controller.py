@@ -6,7 +6,6 @@ class ActivityController:
         self.db = db
 
     def create_activity(self, user_id, data):
-        # Validation and error handling logic here
         if "title" not in data or "description" not in data:
             return {"message": "Title and description are required fields"}, 400
 
@@ -25,7 +24,6 @@ class ActivityController:
             return {"message": "Failed to create activity"}, 500
 
     def delete_activity(self, user_id, activity_id):
-        # Validation and error handling logic here
         activity = Activity.query.get(activity_id)
 
         if not activity:
@@ -43,7 +41,6 @@ class ActivityController:
             return {"message": "Failed to delete activity"}, 500
 
     def update_activity(self, user_id, activity_id, data):
-        # Validation and erro logic
         if "title" not in data:
             return {"message": "Title is a required field"}, 400
 
