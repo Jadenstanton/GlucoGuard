@@ -1,5 +1,6 @@
 import jwt
 import secrets
+from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime, timedelta
 from werkzeug.security import generate_password_hash, check_password_hash
 from ..models.user import UserProfile
@@ -11,7 +12,7 @@ MIN_PASSWORD_LENGTH = 8
 
 
 class UserController:
-    def __init__(self, db):
+    def __init__(self, db: SQLAlchemy):
         self.db = db
 
     def generate_jwt_token(self, user_id):

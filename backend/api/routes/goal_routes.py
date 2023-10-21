@@ -1,8 +1,9 @@
 from flask import Blueprint, request, jsonify
 from ..controllers import goal_controller
 from ..models.goal import Goal
+from ...database.database import db
 
-goal_controller = goal_controller.GoalController()
+goal_controller = goal_controller.GoalController(db)
 
 goal_bp = Blueprint("goal", __name__, url_prefix="/api/goal")
 

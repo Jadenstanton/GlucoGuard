@@ -1,21 +1,20 @@
 from flask_sqlalchemy import SQLAlchemy
+from ...database.database import db
 
-db_user_data = SQLAlchemy()
 
-
-class Alcohol(db_user_data.Model):
-    __bind_key__ = "user_data"  # Associate the model with the user_data database
+class Alcohol(db.Model):
+    # __bind_key__ = "user_data"  # Associate the model with the user_data database
 
     __tablename__ = "alcohol"
 
-    id = db_user_data.Column(db_user_data.Integer, primary_key=True)
-    user_id = db_user_data.Column(
-        db_user_data.Integer,
-        db_user_data.ForeignKey("user_profiles.id"),
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(
+        db.Integer,
+        db.ForeignKey("user_profiles.id"),
         nullable=False,
     )
-    alcohol_type = db_user_data.Column(db_user_data.String(100), nullable=False)
-    quantity = db_user_data.Column(db_user_data.Float, nullable=False)
+    alcohol_type = db.Column(db.String(100), nullable=False)
+    quantity = db.Column(db.Float, nullable=False)
     # Add other fields as needed
 
     def __init__(self, user_id, alcohol_type, quantity):

@@ -1,8 +1,10 @@
 from flask import Blueprint, request, jsonify
 from ..controllers import alcohol_controller
 from ..models.alcohol import Alcohol
+from ...database.database import db
 
-alcohol_controller = alcohol_controller.AlcoholController()
+
+alcohol_controller = alcohol_controller.AlcoholController(db)
 
 alcohol_bp = Blueprint("alcohol", __name__, url_prefix="/api/alcohol")
 

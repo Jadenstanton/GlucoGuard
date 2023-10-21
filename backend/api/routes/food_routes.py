@@ -1,8 +1,9 @@
 from flask import Blueprint, request, jsonify
 from ..controllers import food_controller
 from ..models.food import Food
+from ...database.database import db
 
-food_controller = food_controller.FoodController()
+food_controller = food_controller.FoodController(db)
 
 food_bp = Blueprint("food", __name__, url_prefix="/api/food")
 

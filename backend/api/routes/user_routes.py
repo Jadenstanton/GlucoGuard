@@ -1,8 +1,9 @@
 from flask import Blueprint, request, jsonify
 from ..controllers import user_controller
-from ..models.user import User
+from ..models.user import UserProfile
+from ...database.database import db
 
-user_controller = user_controller.UserController()
+user_controller = user_controller.UserController(db)
 
 user_bp = Blueprint("user", __name__, url_prefix="/api/user")
 
@@ -10,7 +11,7 @@ user_bp = Blueprint("user", __name__, url_prefix="/api/user")
 @user_bp.route("/register", methods=["POST"])
 def register():
     data = request.get_json()
-    user = User(
+    user = UserProfile(
         username=data.get("username"),
         email=data.get("email"),
         password=data.get("password"),

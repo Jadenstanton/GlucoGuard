@@ -1,8 +1,10 @@
 from flask import Blueprint, request, jsonify
 from ..controllers import activity_controller
 from ..models.user import UserProfile
+from ...database.database import db
 
-activity_controller = activity_controller.ActivityController()
+
+activity_controller = activity_controller.ActivityController(db)
 
 activity_bp = Blueprint("activity", __name__, url_prefix="/api/activity")
 
