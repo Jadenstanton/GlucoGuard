@@ -21,3 +21,11 @@ class Goal(db.Model):
         self.user_id = user_id
         self.goal_type = goal_type
         self.attributes = attributes
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "user_id": self.user_id,
+            "goal_type": self.goal_type,
+            "attributes": self.attributes,
+        }

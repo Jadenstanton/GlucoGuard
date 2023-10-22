@@ -1,4 +1,5 @@
 from flask import Blueprint, request, jsonify
+import logging
 from ..controllers import goal_controller
 from ..models.goal import Goal
 from ...database.database import db
@@ -38,10 +39,12 @@ def get_goal(goal_id):
 
     goal = Goal.query.get(goal_id)
 
+    logging.debug(f"Goal's User ID: {goal.user_id}")
+
     if goal is None:
         return jsonify({"message": "Goal not found"}), 404
 
-    if goal.user_id != user_id:
+    if str(goal.user_id) != str(user_id):
         return (
             jsonify({"message": "Unauthorized. User ID does not match goal owner"}),
             403,
@@ -64,7 +67,7 @@ def update_goal(goal_id):
     if goal is None:
         return jsonify({"message": "Goal not found or unauthorized"}), 404
 
-    if goal.user_id != user_id:
+    if str(goal.user_id) != str(user_id):
         return (
             jsonify({"message": "Unauthorized. User ID does not match goal owner"}),
             403,
@@ -91,7 +94,7 @@ def delete_goal(goal_id):
     if goal is None:
         return jsonify({"message": "Goal not found or unauthorized"}), 404
 
-    if goal.user_id != user_id:
+    if str(goal.user_id) != str(user_id):
         return (
             jsonify({"message": "Unauthorized. User ID does not match goal owner"}),
             403,

@@ -1,5 +1,6 @@
 from flask import Flask
 import sys
+import logging
 
 sys.path.append(r"C:\Users\Jaden\Desktop\Development\SeniorProject")
 from flask_sqlalchemy import SQLAlchemy
@@ -15,6 +16,7 @@ from config import DbConfig
 
 def create_app():
     app = Flask(__name__)
+    logging.basicConfig(filename="app.log", level=logging.DEBUG)
     app.config.from_object(DbConfig)
 
     db.init_app(app)
