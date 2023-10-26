@@ -22,6 +22,16 @@ def create_activity():
     if user is None:
         return jsonify({"message": "User not found."}), 404
 
+    if data["activity_type"] not in [
+        "active_zone_minutes",
+        "activity",
+        "breathing_rate",
+        "heart_rate",
+        "heart_rate_variability",
+        "Sp02",
+    ]:
+        return jsonify({"message": "Invalid activity_type"}), 400
+
     activity = activity_controller.create_activity(user.id, data)
 
     try:
@@ -33,7 +43,7 @@ def create_activity():
         )
     except Exception as e:
         activity_controller.db.session.rollback()
-        return jsonify({"message": "Failed to create activity"}), 500
+        return jsonify({"message": "Failed to create activity. Error" + str(e)}), 500
 
 
 @activity_bp.route("/delete/<int:activity_id>", methods=["DELETE"])
@@ -56,7 +66,7 @@ def delete_activity(activity_id):
         return jsonify({"message": "Activity deleted successfully"}), 200
     except Exception as e:
         activity_controller.db.session.rollback()
-        return jsonify({"message": "Failed to delete activity"}), 500
+        return jsonify({"message": "Failed to delete activity. Error" + str(e)}), 500
 
 
 @activity_bp.route("/update/<int:activity_id>", methods=["PUT"])
@@ -64,13 +74,26 @@ def update_activity(activity_id):
     data = request.get_json()
     user_id = data.get("user_id")
 
-    if user_id is None:
-        return jsonify({"message": "Missing user_id in the request data."}), 400
+    if user_id is None or "activity_type" not in data:
+        return (
+            jsonify({"message": "Missing user_id or activity in the request data."}),
+            400,
+        )
 
     user = UserProfile.query.get(user_id)
 
     if user is None:
         return jsonify({"message": "User not found"}), 404
+
+    if data["activity_type"] not in [
+        "active_zone_minutes",
+        "activity",
+        "breathing_rate",
+        "heart_rate",
+        "heart_rate_variability",
+        "Sp02",
+    ]:
+        return jsonify({"message": "Invalid activity_type"}), 400
 
     activity = activity_controller.update_activity(user.id, activity_id, data)
 
@@ -82,4 +105,4 @@ def update_activity(activity_id):
         )
     except Exception as e:
         activity_controller.db.session.rollback()
-        return jsonify({"message": "Failed to update activity"}), 500
+        return jsonify({"message": "Failed to update activity. Error" + str(e)}), 500
