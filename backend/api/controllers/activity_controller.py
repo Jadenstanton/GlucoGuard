@@ -1,37 +1,82 @@
-# Replace with actual db interactions
-activities = []
+from ..models.activity import Activity, ActivityType
 
-def create_activity(data):
-    # TODO
-    # Validation and error handling logic here
-    activity = {
-        'title': data['title'],
-        'descripton': data['description']
-    }
-    activities.append(activity)
-    return {'message': 'Activity created successfully'}
 
-def delete_activity(activity_id):
-    # Validation and error handling logic here
-    if not isinstance(activity_id, int):
-        return {'message': 'Invalid activity ID'}, 400
+class ActivityController:
+    def __init__(self, db):
+        self.db = db
 
-    activity =  next((activity for activity in activities if activity.get('id') == activity_id), None)
-    if activity:
-        activities.remove(activity)
-        return {'message': 'Activity deleted successfully'}
-    else:
-        return {'message': 'Activity not found'}, 404
-    
-def update_activity(activity_id, data):
-    # Validation and erro logic
-    if not isinstance(activity_id, int):
-        return {'message': 'Invalid activity ID'}, 400
-    activity =  next((activity for activity in activities if activity.get('id') == activity_id), None)
-    if activity:
-        activity['title'] = data['title']
-        activity['description'] = data['description']
-        return {'message': 'Activity updated successfully'}
-    else:
-        return {'message': "Activity not found"}, 404
-    
+    def create_activity(self, user_id, data):
+        if (
+            "activity_type" not in data
+            or "title" not in data
+            or "description" not in data
+        ):
+            return {
+                "message": "Activity typw, title, and description are required fields"
+            }, 400
+
+        activity_type = data["activity_type"]
+
+        if activity_type not in [item.value for item in ActivityType]:
+            return {"message": "Invalid activity type"}, 400
+
+        activity = {
+            "user_id": user_id,
+            "activity_type": activity_type,
+            "title": data["title"],
+            "descripton": data["description"],
+        }
+
+        try:
+            self.db.session.add(activity)
+            self.db.session.commit()
+            return {"message": "Activity created successfully", "data": activity}, 201
+        except Exception as e:
+            self.db.session.rollback()
+            return {"message": "Failed to create activity"}, 500
+
+    def delete_activity(self, user_id, activity_id):
+        activity = Activity.query.get(activity_id)
+
+        if not activity:
+            return {"message": "Activity not found"}, 404
+
+        if activity.user_id != user_id:
+            return {"message": "Permission denied"}, 403
+
+        try:
+            self.db.session.delete(activity)
+            self.db.session.commit()
+            return {"message": "Activity deleted successfully"}
+        except Exception as e:
+            self.db.session.rollback()
+            return {"message": "Failed to delete activity"}, 500
+
+    def update_activity(self, user_id, activity_id, data):
+        if "activity_type" not in data or "title" not in data:
+            return {"message": "Activity type and title are required fields"}, 400
+
+        activity_type = data["activity_type"]
+
+        if activity_type not in [item.value for item in ActivityType]:
+            return {"message": "Invalid activity type"}, 400
+
+        activity = Activity.query.get(activity_id)
+
+        if not activity:
+            return {"message": "Activity not found"}, 404
+
+        if activity.user_id != user_id:
+            return {"message": "Permission denied"}, 403
+
+        activity.activity_type = activity_type
+        activity.title = data["title"]
+        activity.description = data.get("description")
+
+        try:
+            self.db.session.commit()
+            return {"message": "Activity updated successfully", "data": activity}
+
+        except Exception as e:
+            self.db.session.rollback()
+            return {"message": "Failed to update activity"}, 500
