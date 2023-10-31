@@ -69,7 +69,7 @@ class UserController:
         try:
             self.db.session.add(new_user)
             self.db.session.commit()
-            return {"message": "Registration successful"}
+            return {"message": "Registration successful"}, 201
         except Exception as e:
             self.db.session.rollback()
             return {"message": "Failed to register user. Error" + str(e)}, 500
