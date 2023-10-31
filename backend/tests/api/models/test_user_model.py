@@ -6,19 +6,6 @@ from backend.api.models.user import UserProfile
 #     assert "test_" in test_db.engine.url.database
 
 
-# New Fixture: Setup a user for tests
-@pytest.fixture(scope="function")
-def setup_user(db_session):
-    user = UserProfile(
-        username="testuser",
-        email="testuser@example.com",
-        password="password123",  # TODO: Hash this password
-    )
-    db_session.add(user)
-    db_session.commit()
-    yield user
-
-
 def test_create_user(db_session):
     # Create a new user
     user = UserProfile(
