@@ -1,14 +1,11 @@
-import React from "react";
-import Header from "./components/common/Header";
-import Navbar from "./components/common/Navbar";
-import Footer from "./components/common/Footer";
+import React from 'react';
+import './App.css';
+import MainContainer from './components/layout/MainContainer'; 
 
-function App(){
+function App() {
   return (
-    <div>
-      <Header />
-      <Navbar />
-      <Footer />
+    <div className="App">
+      <MainContainer />
     </div>
   );
 }

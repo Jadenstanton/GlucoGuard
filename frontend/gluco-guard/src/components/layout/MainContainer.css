@@ -1,0 +1,11 @@
+.main-container {
+    position: relative;
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(to right, #f8f8f8, #e0e0e0);
+    overflow: hidden; /* This ensures that the sliding components won't go outside the container */
+  }
+  
