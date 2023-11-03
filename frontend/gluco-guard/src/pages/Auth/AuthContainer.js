@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './AuthContainer.css';
-import Login from '../auth/Login'; 
-import Register from '../auth/Register'; 
+import Login from '../../pages/Auth/Login'; 
+import Register from '../../pages/Auth/Register'; 
 
 const AuthContainer = () => {
     const [isSignInActive, setIsSignInActive] = useState(true);

@@ -1,0 +1,40 @@
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0px;
+    background-color: #1b1c1b;  
+    height: 50px;
+    position: relative;
+}
+
+.branding {
+    font-size: 24px;
+    color: white;
+    flex-shrink: 0;
+    padding-left: 20px;
+}
+
+.nav-items {
+    display: flex;
+    gap: 10px;
+    flex-grow: 1;
+    justify-content: flex-end;
+}
+
+.nav-button {
+    padding: 5px 10px;
+    background-color: #555; 
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+}
+
+.nav-button:hover {
+    background-color: #777; 
+}
+
+.profile-dropdown {
+    margin-left: 20px;
+}

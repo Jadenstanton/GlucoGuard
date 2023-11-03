@@ -9,3 +9,9 @@
     overflow: hidden; /* This ensures that the sliding components won't go outside the container */
   }
   
+  .auth-background {
+    /* background-image: url('.../assets/images/auth-background.jpg'); */
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}

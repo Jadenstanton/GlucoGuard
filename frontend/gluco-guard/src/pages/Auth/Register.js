@@ -16,6 +16,7 @@ const Register = ({ isSignInActive, onSwitch }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(formData);
+    // TODO
     // integrate backend registration logic.
   };
 
@@ -23,7 +24,10 @@ const Register = ({ isSignInActive, onSwitch }) => {
     <div className={isSignInActive ? "register-container collapsed" : "register-container expanded"}>
         {isSignInActive ? (
             <>
-                <h2 className='register-title'>Hello, Friend!</h2>
+                <h2 className='register-title'>Hello there!</h2>
+                <p>Enter your personal details <br/>
+                  and start you health journey with us
+                </p>
                 <button className="register-button" onClick={onSwitch}>Sign Up</button>
             </>
         ) : (

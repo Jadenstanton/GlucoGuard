@@ -13,7 +13,10 @@ const Login = ({isSignInActive, onSwitch}) => {
       </>
     ) : (
       <>
-        <h2 className='login-title'>Hello, Friend!</h2>
+        <h2 className='login-title'>Welcome Back!</h2>
+        <p>To get back where you left off <br/> 
+          please enter your details
+        </p>
         <button className='login-button' onClick={onSwitch}>Sign In</button>
       </>
     )}
