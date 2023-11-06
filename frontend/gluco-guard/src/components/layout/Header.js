@@ -7,7 +7,6 @@ import ProfileDropdown from '../../pages/Profile/ProfileDropdown';
 /* Finish linking pages and fix dropdown for profile
  so that are personal pages can go in it*/
 const Header = () => {
-    const [isProfileDropdownOpen, setProfileDropdownOpen] = useState(false);
 
     return (
         <div className="header-container">
@@ -15,20 +14,12 @@ const Header = () => {
                 GlucoGuard
             </div>
             <div className="nav-items">
-                <Link to='/auth' className='nav-button'>Sign Up</Link>
+                <ProfileDropdown />
                 <button className="nav-button">Home</button>
                 <button className="nav-button">Dashboard</button>
-                <button 
-                    className="nav-button" 
-                    onClick={() => setProfileDropdownOpen(!isProfileDropdownOpen)}
-                >
-                    Profile
-                </button>
-                {isProfileDropdownOpen && <ProfileDropdown />}
-                <button className="nav-button">Settings</button>
-                <button className="nav-button">Nutritional Overview</button>
+                {/* <button className="nav-button">Nutritional Overview</button>
                 <button className="nav-button">Activity Overview</button>
-                <button className="nav-button">Logging & Tracking</button>
+                <button className="nav-button">Logging & Tracking</button> */}
             </div>
         </div>
     );

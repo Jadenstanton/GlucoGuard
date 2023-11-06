@@ -3,6 +3,7 @@ import './App.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import AuthPage from './pages/Auth/AuthPage';
+import ProfilePage from './pages/Profile/ProfilePage';
 import Footer from './components/layout/Footer';
 import Header from './components/layout/Header';
 
@@ -15,6 +16,7 @@ function App() {
         <Header />
         <Routes>
           <Route path="/auth" element={<AuthPage />} />
+          <Route path="/my-profile" element={<ProfilePage />} />
           {/* <Route path="/dashboard"  element={DashboardPage} />
           <Route path="/profile" element={ProfilePage} />
          */}
