@@ -15,7 +15,6 @@ class Goal(db.Model):
     )
     goal_type = db.Column(db.String(50), nullable=False)
     attributes = db.Column(db.JSON)
-    # Add other fields as needed
 
     def __init__(self, user_id, goal_type, attributes):
         self.user_id = user_id
