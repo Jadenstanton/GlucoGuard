@@ -26,7 +26,6 @@ class Activity(db.Model):
     activity_type = db.Column(db.Enum(ActivityType), nullable=False)
     title = db.Column(db.String(100), nullable=False)
     description = db.Column(db.String(255))
-    # Add other fields as needed
 
     def __init__(self, user_id, activity_type, title, description):
         self.user_id = user_id
