@@ -64,12 +64,12 @@ class UserController:
             username=data["username"], email=data["email"], password=hashed_password
         )
         print("Plaintext Password:", data["password"])
-        print("Hashed Password:", hashed_password)
+        # print("Hashed Password:", hashed_password)
 
         try:
             self.db.session.add(new_user)
             self.db.session.commit()
-            return {"message": "Registration successful"}, 201
+            return {"message": "User registered successfully"}, 201
         except Exception as e:
             self.db.session.rollback()
             return {"message": "Failed to register user. Error" + str(e)}, 500
@@ -94,3 +94,11 @@ class UserController:
             logging.debug(f"Provided email: {user.email}")
 
             return {"message": "Invalid email or password"}, 401
+
+    def check_username_availability(self, username):
+        user = UserProfile.query.filter_by(username=username).first()
+        return user is None
+
+    def check_email_availability(self, email):
+        email = UserProfile.query.filter_by(email=email).first()
+        return email is None
