@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../../components/layout/Header.css';
@@ -9,7 +8,6 @@ import './ProfileDropdown.css'
 const ProfileDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  // This div is positioned relative, which means the absolute elements inside it will be positioned relative to this div.
   return (
     <div className="profile-dropdown" style={{ position: 'relative' }}>
       <button className='nav-button' onClick={() => setIsOpen(!isOpen)}>Profile</button>
@@ -21,10 +19,8 @@ const ProfileDropdown = () => {
           <a href="/nutrition">Nutritional Overview</a>
           <a href="/activity">Activity Overview</a>
           <a href="/logging">Logging & Tracking</a>
-          <a href="/settings">Settings</a>
+          <Link to="/settings">Settings</Link>
           <Link to='/auth' className='auth-button'>Sign Up</Link>
-
-          {/* ... other links ... */}
         </div>
       )}
     </div>

@@ -1,0 +1,46 @@
+.account-preferences {
+    max-width: 400px; 
+    margin: 0 auto; 
+    padding: 20px; 
+    background: #fff; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+    border-radius: 8px; 
+  }
+  
+  .account-preferences form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .account-preferences label {
+    margin-bottom: 0.5rem;
+    font-weight: bold; 
+  }
+  
+  .account-preferences input {
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    border: 1px solid #ccc; 
+    border-radius: 4px; 
+  }
+  
+  .account-preferences button {
+    padding: 10px 15px;
+    background-color: #007bff; 
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer; 
+    transition: background-color 0.3s ease; 
+  }
+  
+  .account-preferences button:hover {
+    background-color: #0056b3; 
+  }
+  
+  @media (max-width: 600px) {
+    .account-preferences {
+      margin: 0 10px;
+    }
+  }
+  

@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import './Register.css';
+import { registerUser } from '../../services/authService';
 
 const Register = ({ isSignInActive, onSwitch }) => {
   const [formData, setFormData] = useState({
-    name: '',
+    username: '',
     email: '',
     password: '',
   });
@@ -12,12 +13,23 @@ const Register = ({ isSignInActive, onSwitch }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-
-  const handleSubmit = (e) => {
+  // Function to handle the registration submission
+  const handleRegister = async (e) => {
     e.preventDefault();
-    console.log(formData);
-    // TODO
-    // integrate backend registration logic.
+    try {
+      const response = await registerUser(formData);
+      if (response.message === 'User registered successfully') {
+        console.log('Registration Successful');
+        // Redirect to login page or automatically log the user in
+      } else {
+        console.log('Registration Failed');
+        // Show error messages to the user, based on the response.message
+      }
+    } catch (error) {
+      console.error('Registration Error:', error);
+      // Handle errors such as no network connection,
+      // or server not responding properly
+    }
   };
 
   return (
@@ -33,8 +45,8 @@ const Register = ({ isSignInActive, onSwitch }) => {
         ) : (
             <>
                 <h1>Sign Up for GlucoGuard</h1>
-                <form onSubmit={handleSubmit}>
-                    <input className='register-input' type="text" placeholder="Username" name="name" value={formData.name} onChange={handleChange} />
+                <form onSubmit={handleRegister}> {/* Updated to use the new function */}
+                    <input className='register-input' type="text" placeholder="Username" name="username" value={formData.username} onChange={handleChange} />
                     <input className='register-input' type="email" placeholder="Email" name="email" value={formData.email} onChange={handleChange} />
                     <input className='register-input' type="password" placeholder="Password" name="password" value={formData.password} onChange={handleChange} />
                     <button className='register-button' type="submit">Register</button>
@@ -47,4 +59,3 @@ const Register = ({ isSignInActive, onSwitch }) => {
 }
 
 export default Register;
-

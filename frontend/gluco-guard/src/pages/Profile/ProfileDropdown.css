@@ -19,15 +19,13 @@
     background-color: #f7f7f7; 
   }
   
-  /* This is the container for the dropdown, it's positioned relative so the dropdown can be absolute in relation to this */
 .profile-dropdown {
   position: relative;
-  display: inline-block; /* or 'block' depending on your layout */
+  display: inline-block; 
 }
 
-/* This styles the button to trigger the dropdown */
 .profile-dropdown button {
-  background-color: #4c9baf; /* A nice green */
+  background-color: #4c9baf; 
   color: white;
   padding: 10px;
   border: none;
@@ -35,7 +33,6 @@
   outline: none;
 }
 
-/* Change background of button when hovered over */
 .profile-dropdown button:hover {
   background-color: #45a049;
 }
@@ -44,9 +41,9 @@
 .dropdown-content {
   display: none;
   position: absolute;
-  background-color: #f9f9f9; /* Light grey background */
+  background-color: #f9f9f9; 
   min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); /* Adds a shadow for some depth */
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); 
   z-index: 1;
 }
 
@@ -58,12 +55,10 @@
   display: block;
 }
 
-/* Change color of dropdown links on hover */
 .dropdown-content a:hover {
-  background-color: #f1f1f1 /* Light grey background on hover */
+  background-color: #f1f1f1 
 }
 
-/* Show the dropdown content when the container is clicked */
 .profile-dropdown:hover .dropdown-content {
   display: block;
 }

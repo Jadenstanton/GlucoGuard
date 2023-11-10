@@ -4,3 +4,24 @@
     background-size: cover;
     background-position: center;
 }
+
+.profile-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .main-content {
+    display: grid;
+    grid-template-columns: 1fr 3fr; /* Adjust the ratio as per your design */
+    gap: 20px;
+    width: 90%;
+    margin-top: 20px;
+  }
+  
+  @media (max-width: 768px) {
+    .main-content {
+      grid-template-columns: 1fr; /* Stack the sections on smaller screens */
+    }
+  }

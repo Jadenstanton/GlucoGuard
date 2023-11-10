@@ -1,0 +1,27 @@
+.health-summary {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  
+  .health-summary .title {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .health-summary .chart-container {
+    width: 100%;
+    max-width: 600px; 
+    margin: auto;
+  }
+  
+  /* Responsive adjustments for smaller screens */
+  @media (max-width: 768px) {
+    .health-summary .chart-container {
+      width: 90%;
+    }
+  }
+  

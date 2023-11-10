@@ -6,7 +6,8 @@ const ProfileHeader = ({ username, profileImage }) => {
     <div className="profile-header">
       <img src={profileImage} alt={`${username}'s profile`} className="profile-image"/>
       <h1 className="username">{username}</h1>
-      <h1 className="username">John Doe</h1>
+      <h1 className="username">John Doe</h1> 
+      {/* temp name for reference */}
     </div>
   );
 };

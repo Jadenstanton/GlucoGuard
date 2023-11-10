@@ -4,8 +4,6 @@ import './Header.css';
 import ProfileDropdown from '../../pages/Profile/ProfileDropdown';
 
 // TODO
-/* Finish linking pages and fix dropdown for profile
- so that are personal pages can go in it*/
 const Header = () => {
 
     return (
@@ -15,8 +13,10 @@ const Header = () => {
             </div>
             <div className="nav-items">
                 <ProfileDropdown />
-                <button className="nav-button">Home</button>
-                <button className="nav-button">Dashboard</button>
+                <Link to='/' className='nav-button'>Home</Link>
+                {/* <Link to='/settings' className='nav-button'>Settings</Link> */}
+                {/* <button className="nav-button">Home</button> */}
+                <Link to='/dashboard' className="nav-button">Dashboard</Link>
                 {/* <button className="nav-button">Nutritional Overview</button>
                 <button className="nav-button">Activity Overview</button>
                 <button className="nav-button">Logging & Tracking</button> */}

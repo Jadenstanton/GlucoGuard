@@ -1,0 +1,29 @@
+.features-intro {
+    text-align: center;
+    margin: 2em 0;
+  }
+  
+  .features-intro h2 {
+    font-size: 2em;
+    margin-bottom: 1em;
+  }
+  
+  .feature {
+    margin-bottom: 1em;
+    padding: 1em;
+    border-radius: 8px;
+    background-color: #f4f4f4; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+  }
+  
+  .feature h3 {
+    font-size: 1.5em;
+    color: #333; 
+  }
+  
+  .feature p {
+    font-size: 1em;
+    color: #666; 
+    line-height: 1.5;
+  }
+  
