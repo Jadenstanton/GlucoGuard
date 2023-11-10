@@ -1,44 +1,164 @@
 from flask import Blueprint, request, jsonify
+from config import EdamamConfig
 from ..controllers import food_controller
 from ..models.food import Food
 from ...database.database import db
+import requests
+import logging
 
-food_controller = food_controller.FoodController(db)
+logging.basicConfig(level=logging.DEBUG)
+
+food_controller_instance = food_controller.FoodController(db)
 
 food_bp = Blueprint("food", __name__, url_prefix="/api/food")
 
+EDAMAM_INDIVIDUAL_API_ENDPOINT = EdamamConfig.EDAMAM_INDIVIDUAL_API_ENDPOINT
+EDAMAM_RECIPE_API_ENDPOINT = EdamamConfig.EDAMAM_RECIPE_API_ENDPOINT
+EDAMAM_API_KEY = EdamamConfig.APP_KEY
+EDAMAM_APP_ID = EdamamConfig.APP_ID
 
-@food_bp.route("/create", methods=["POST"])
-def create_food():
-    data = request.get_json()
-    user_id = data.get("user_id")
 
-    if user_id is None:
-        return jsonify({"message": "Missing user_id in the request data."}), 400
-
-    if "food_name" not in data or "portion_size" not in data:
-        return (
-            jsonify({"message": "Food name and portion size are required fields"}),
-            400,
-        )
-
-    food = Food(
-        user_id=user_id,
-        food_name=data.get("food_name"),
-        portion_size=data.get("portion_size"),
-        nutritional_info=data.get("nutritional_info"),
+def fetch_nutritional_info_recipe(title, ingredients):
+    headers = {"Content-Type": "application/json"}
+    data = {"title": title, "ingr": ingredients}
+    response = requests.post(
+        f"{EDAMAM_RECIPE_API_ENDPOINT}?app_id={EDAMAM_APP_ID}&app_key={EDAMAM_API_KEY}",
+        headers=headers,
+        json=data,
     )
 
-    try:
-        food_controller.db.session.add(food)
-        food_controller.db.session.commit()
-        return (
-            jsonify({"message": "Food entry created successfully", "data": food.id}),
-            201,
-        )
-    except Exception as e:
-        food_controller.db.session.rollback()
-        return jsonify({"message": "Failed to create food entry"}), 500
+    logging.debug("Edamam API Response: %s", response.text)
+
+    logging.debug("Edamam API Response Status Code: %s", response.status_code)
+    logging.debug(f"Data fetched: {data}")
+
+    if response.status_code != 200:
+        return None
+
+    return response.json()
+
+
+def fetch_nutritional_info(ingredient):
+    headers = {
+        "Content-Type": "application/json",
+    }
+
+    params = {
+        "app_id": EDAMAM_APP_ID,
+        "app_key": EDAMAM_API_KEY,
+        "nutrition-type": "logging",
+        "ingr": ingredient,
+    }
+
+    response = requests.get(
+        EDAMAM_INDIVIDUAL_API_ENDPOINT, headers=headers, params=params
+    )
+    logging.debug("Edamam API Response: %s", response.text)
+
+    # Log the status code
+    logging.debug("Edamam API Response Status Code: %s", response.status_code)
+    # logging.debug(f"Data fetched: {data}")
+
+    if response.status_code != 200:
+        return None
+
+    return response.json()
+
+
+@food_bp.route("/view_foods", methods=["GET"])
+def view_foods():
+    foods = Food.query.all()
+    food_list = [f.serialize() for f in foods]
+    return jsonify(food_list)
+
+
+@food_bp.route("/test", methods=["GET"])
+def test_route():
+    return jsonify({"message": "Test route is working!"}), 200
+
+
+@food_bp.route("/create_recipe", methods=["POST"])
+def create_recipe():
+    data = request.get_json()
+    user_id = data.get("user_id")
+    title = data.get("title")
+    ingredients = data.get("ingredients")
+    portion_size = data.get("portion_size", "Not Defined")
+
+    nutritional_info = fetch_nutritional_info_recipe(title, ingredients)
+
+    if not nutritional_info:
+        return jsonify({"message": "Failed to fetch nutritional info"}), 500
+
+    food_data = {
+        "food_name": title,
+        "portion_size": portion_size,
+        "nutritional_info": nutritional_info,
+    }
+
+    response, status_code = food_controller_instance.create_food(user_id, food_data)
+    return jsonify(response), status_code
+
+
+@food_bp.route("/create_individual_food", methods=["POST"])
+def create_individual_food():
+    data = request.get_json()
+
+    if not data:
+        return jsonify({"message": "Invalid data provided"}), 400
+
+    user_id = data.get("user_id")
+    ingredient = data.get("ingredient")
+    portion_size = data.get("portion_size", "Not Defined")
+
+    if not user_id or not ingredient:
+        return jsonify({"message": "User ID and ingredient are required"}), 400
+
+    nutritional_info = fetch_nutritional_info(ingredient)
+
+    if not nutritional_info:
+        return jsonify({"message": "Failed to fetch nutritional info"}), 500
+
+    food_data = {
+        "food_name": ingredient,
+        "portion_size": portion_size,
+        "nutritional_info": nutritional_info,
+    }
+
+    response, status_code = food_controller_instance.create_food(user_id, food_data)
+    return jsonify(response), status_code
+
+
+@food_bp.route("/update_recipe/<int:food_id>", methods=["PUT"])
+def update_recipe(food_id):
+    data = request.get_json()
+    user_id = data.get("user_id")
+    title = data.get("title")
+    ingredients = data.get("ingredients")
+
+    nutritional_info = fetch_nutritional_info_recipe(title, ingredients)
+
+    if not nutritional_info:
+        return jsonify({"message": "Failed to fetch nutritional info"}), 500
+
+    # Extracting fields from the nutritional_info
+    food_data = {
+        "food_name": title,
+        "portion_size": "Not Defined",  # Defaulting to "Not Defined" for now
+        "nutritional_info": nutritional_info,
+    }
+
+    response, status_code = food_controller_instance.update_food(
+        user_id, food_id, food_data
+    )
+    return jsonify(response), status_code
+
+
+@food_bp.route("/get/<int:food_id>", methods=["GET"])
+def get_food(food_id):
+    user_id = request.args.get("user_id")
+    response, status_code = food_controller_instance.get_food(user_id, food_id)
+    return jsonify(response), status_code
 
 
 @food_bp.route("/update/<int:food_id>", methods=["PUT"])
@@ -46,60 +166,16 @@ def update_food(food_id):
     data = request.get_json()
     user_id = data.get("user_id")
 
-    if user_id is None:
-        return jsonify({"message": "Missing user_id in the request data."}), 400
+    nutritional_info = fetch_nutritional_info(data.get("food_name"))
+    if nutritional_info:
+        data["nutritional_info"] = nutritional_info
 
-    if "food_name" not in data or "portion_size" not in data:
-        return (
-            jsonify({"message": "Food name and portion size are required fields"}),
-            400,
-        )
-
-    food = Food.query.get(food_id)
-
-    if not food:
-        return jsonify({"message": "Food entry not found"}), 404
-
-    if food.user_id != user_id:
-        return (
-            jsonify({"message": "Unauthorized. User ID does not match food owner"}),
-            403,
-        )
-
-    food.food_name = data["food_name"]
-    food.portion_size = data["portion_size"]
-    food.nutritional_info = data.get("nutritional_info")
-
-    try:
-        food_controller.db.session.commit()
-        return jsonify({"message": "Food entry updated successfully", "data": food.id})
-    except Exception as e:
-        food_controller.db.session.rollback()
-        return jsonify({"message": "Failed to update food entry"}), 500
+    response, status_code = food_controller_instance.update_food(user_id, food_id, data)
+    return jsonify(response), status_code
 
 
 @food_bp.route("/delete/<int:food_id>", methods=["DELETE"])
 def delete_food(food_id):
     user_id = request.args.get("user_id")
-
-    if user_id is None:
-        return jsonify({"message": "Missing user_id in request."}), 400
-
-    food = Food.query.get(food_id)
-
-    if not food:
-        return jsonify({"message": "Food entry not found"}), 404
-
-    if food.user_id != user_id:
-        return (
-            jsonify({"message": "Unauthorized. User ID does not match food owner"}),
-            403,
-        )
-
-    try:
-        food_controller.db.session.delete(food)
-        food_controller.db.session.commit()
-        return jsonify({"message": "Food entry deleted successfully"})
-    except Exception as e:
-        food_controller.db.session.rollback()
-        return jsonify({"message": "Failed to delete food entry"}), 500
+    response, status_code = food_controller_instance.delete_food(user_id, food_id)
+    return jsonify(response), status_code
