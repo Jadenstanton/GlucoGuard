@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Login.css';
 import { loginUser } from '../../services/authService';
 
@@ -7,17 +8,22 @@ const Login = ({ isSignInActive, onSwitch }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+  const navigate = useNavigate();
+
+
   // Function to handle the form submission
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent the default form submit action
     try {
       const response = await loginUser({ email, password });
       if ('token' in response) {
-        console.log('Login Successful');
-        // Save the JWT token in local storage or context
-        // Redirect user to their dashboard or homepage
+        console.log('Login Successful:', response.token);
+        localStorage.setItem('token', response.token);
+        navigate('/dashboard')
       } else {
-        console.log('Login Failed');
+        console.log('Login Failed:', response.message);
         // Show error messages to the user
       }
     } catch (error) {
