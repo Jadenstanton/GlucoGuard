@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
+import PrivateRoute from './components/PrivateRoute';
 import AuthPage from './pages/Auth/AuthPage';
 import ProfilePage from './pages/Profile/ProfilePage';
 import HomePage from './pages/Home/HomePage';
@@ -18,14 +19,14 @@ function App() {
       <div className="App">
         <Header />
         <Routes>
+          <Route path="/" exact element={<HomePage />} />
           <Route path="/auth" element={<AuthPage />} />
-          <Route path='/settings' element={<SettingsPage />} />
-          <Route path="/my-profile" element={<ProfilePage />} />
-          {/* <Route path="/dashboard"  element={DashboardPage} />
-          <Route path="/profile" element={ProfilePage} />
-         */}
-          <Route path="/" exact element={<HomePage />} /> 
-          <Route path="/dashboard" exact element={<Dashboard />} /> 
+          <Route element={<PrivateRoute />}>
+            <Route path='/settings' element={<SettingsPage />} />
+            <Route path="/my-profile" element={<ProfilePage />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+          </Route>
+ 
         </Routes>
 
         <Footer />

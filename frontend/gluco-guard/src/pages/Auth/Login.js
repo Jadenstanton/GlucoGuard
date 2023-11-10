@@ -1,15 +1,14 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
 import { loginUser } from '../../services/authService';
+import { AuthContext } from '../../context/AuthContext';
 
 const Login = ({ isSignInActive, onSwitch }) => {
   // State to hold the input values
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
-
-  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+  const { toggleAuth } = useContext(AuthContext);
   const navigate = useNavigate();
 
 
@@ -21,6 +20,7 @@ const Login = ({ isSignInActive, onSwitch }) => {
       if ('token' in response) {
         console.log('Login Successful:', response.token);
         localStorage.setItem('token', response.token);
+        toggleAuth(true);
         navigate('/dashboard')
       } else {
         console.log('Login Failed:', response.message);

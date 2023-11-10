@@ -1,25 +1,32 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import './Header.css';
 import ProfileDropdown from '../../pages/Profile/ProfileDropdown';
+import { AuthContext } from '../../context/AuthContext';
 
 // TODO
 const Header = () => {
-
+    const { isAuthenticated } = useContext(AuthContext);
+   
     return (
         <div className="header-container">
             <div className="branding">
                 GlucoGuard
             </div>
             <div className="nav-items">
-                <ProfileDropdown />
-                <Link to='/' className='nav-button'>Home</Link>
-                {/* <Link to='/settings' className='nav-button'>Settings</Link> */}
-                {/* <button className="nav-button">Home</button> */}
-                <Link to='/dashboard' className="nav-button">Dashboard</Link>
-                {/* <button className="nav-button">Nutritional Overview</button>
-                <button className="nav-button">Activity Overview</button>
-                <button className="nav-button">Logging & Tracking</button> */}
+            {isAuthenticated ? (
+                <>
+                    <ProfileDropdown />
+                    <Link to='/dashboard' className='nav-button'>Dashboard</Link>
+                    
+                </>
+            ) : (
+                <>
+                    <Link to='/' className='nav-button'>Home</Link>
+                    <Link to='/auth' className='nav-button'>Login</Link>
+                </>
+            )}
+               
             </div>
         </div>
     );

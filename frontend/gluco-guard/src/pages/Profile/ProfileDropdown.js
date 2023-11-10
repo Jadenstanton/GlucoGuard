@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../../components/layout/Header.css';
 import './ProfileDropdown.css'
+import LogoutButton from '../Auth/LogoutButton';
 
 
 
@@ -20,7 +21,7 @@ const ProfileDropdown = () => {
           <a href="/activity">Activity Overview</a>
           <a href="/logging">Logging & Tracking</a>
           <Link to="/settings">Settings</Link>
-          <Link to='/auth' className='auth-button'>Sign Up</Link>
+          <LogoutButton />
         </div>
       )}
     </div>
