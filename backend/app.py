@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_cors import CORS
 import sys
 import logging
 import os
@@ -22,6 +23,8 @@ def create_app(config_obj=DbConfig):
 
     db.init_app(app)
     migrate.init_app(app, db)
+
+    CORS(app)
 
     # Register blueprint routes
     app.register_blueprint(user_bp)
