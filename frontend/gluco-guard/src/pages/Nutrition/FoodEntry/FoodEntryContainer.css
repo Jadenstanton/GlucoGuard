@@ -1,0 +1,19 @@
+.food-entry-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background-color: #f8f8f8;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 30px auto; 
+    max-width: 600px; 
+  }
+  
+  @media (max-width: 768px) {
+    .food-entry-container {
+      padding: 15px;
+      margin: 20px auto;
+    }
+  }
+  

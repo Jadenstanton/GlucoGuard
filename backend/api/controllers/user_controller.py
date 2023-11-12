@@ -87,7 +87,11 @@ class UserController:
 
         if check_password_hash(user.password, data["password"]):
             jwt_token = self.generate_jwt_token(user.id)
-            return {"message": "Login successful", "token": jwt_token}
+            return {
+                "message": "Login successful",
+                "token": jwt_token,
+                "userId": user.id,
+            }
         else:
             logging.debug(f"Stored Hashed Password: {user.password}")
             logging.debug(f"Provided Password: {data['password']}")

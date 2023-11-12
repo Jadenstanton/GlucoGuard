@@ -19,7 +19,9 @@ const Login = ({ isSignInActive, onSwitch }) => {
       const response = await loginUser({ email, password });
       if ('token' in response) {
         console.log('Login Successful:', response.token);
+        console.log(response);
         localStorage.setItem('token', response.token);
+        localStorage.setItem('userId', response.userId)
         toggleAuth(true);
         navigate('/dashboard')
       } else {
