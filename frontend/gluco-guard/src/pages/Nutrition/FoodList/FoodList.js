@@ -3,7 +3,7 @@ import FoodListItem from '../FoodListItem/FoodListItem';
 import './FoodList.css';
 
 const FoodList = ({ foods, onEdit, onDelete }) => {
-  // console.log('foods:', foods);
+  // console.log("Food items:", foods.data);
   const foodItems = foods.data;
   return (
     <div className="food-list">

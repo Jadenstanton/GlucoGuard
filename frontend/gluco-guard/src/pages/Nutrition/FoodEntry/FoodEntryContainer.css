@@ -1,5 +1,6 @@
 .food-entry-container {
     display: flex;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
     padding: 20px;
@@ -13,7 +14,8 @@
   @media (max-width: 768px) {
     .food-entry-container {
       padding: 15px;
-      margin: 20px auto;
+      margin: 20px auto
     }
   }
   
+  /*TODO*/
