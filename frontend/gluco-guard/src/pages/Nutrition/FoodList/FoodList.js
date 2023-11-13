@@ -3,9 +3,11 @@ import FoodListItem from '../FoodListItem/FoodListItem';
 import './FoodList.css';
 
 const FoodList = ({ foods, onEdit, onDelete }) => {
+  // console.log('foods:', foods);
+  const foodItems = foods.data;
   return (
     <div className="food-list">
-      {foods.map((food) => (
+      {foodItems && foodItems.map((food) => (
         <FoodListItem 
           key={food.id} 
           food={food} 

@@ -141,3 +141,20 @@ class FoodController:
             "data": food.to_dict(),
         }
         return response, 200
+
+    def get_all_foods(self, user_id):
+        # Retrieve all food entries
+        all_foods = Food.query.filter_by(user_id=user_id).all()
+
+        # Check if any food entries exist for the user
+        if not all_foods:
+            return {"message": "No food entries found for the user"}, 404
+
+        # Prepare response data
+        food_list = [food.to_dict() for food in all_foods]
+        response = {
+            "message": "All food entries retrieved successfully",
+            "data": food_list,
+        }
+
+        return response, 200

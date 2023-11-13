@@ -65,13 +65,6 @@ def fetch_nutritional_info(ingredient):
     return response.json()
 
 
-@food_bp.route("/view_foods", methods=["GET"])
-def view_foods():
-    foods = Food.query.all()
-    food_list = [f.serialize() for f in foods]
-    return jsonify(food_list)
-
-
 @food_bp.route("/test", methods=["GET"])
 def test_route():
     return jsonify({"message": "Test route is working!"}), 200
@@ -81,9 +74,14 @@ def test_route():
 def create_recipe():
     data = request.get_json()
     user_id = data.get("user_id")
-    title = data.get("title")
-    ingredients = data.get("ingredients")
+    # title = data.get("title")
+    # ingredients = data.get("ingredients")
     portion_size = data.get("portion_size", "Not Defined")
+
+    parts = data.get("title").split(",")
+
+    title = parts[0].strip()
+    ingredients = [part.strip() for part in parts[1:]]
 
     nutritional_info = fetch_nutritional_info_recipe(title, ingredients)
 
@@ -151,6 +149,16 @@ def update_recipe(food_id):
     response, status_code = food_controller_instance.update_food(
         user_id, food_id, food_data
     )
+    return jsonify(response), status_code
+
+
+@food_bp.route("/view_foods", methods=["POST"])
+def view_foods():
+    data = request.get_json()
+    user_id = data.get("user_id")
+    if not user_id:
+        return jsonify({"message": "User ID is required"}), 400
+    response, status_code = food_controller_instance.get_all_foods(user_id)
     return jsonify(response), status_code
 
 
