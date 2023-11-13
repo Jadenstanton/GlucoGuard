@@ -1,9 +1,15 @@
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 // Fetch all food entries
-export const getAllFoods = async () => {
+export const getAllFoods = async (userId) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/food/view_foods`);
+    const response = await fetch(`${API_BASE_URL}/food/view_foods`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ user_id: userId }),
+    });
     if (!response.ok) throw new Error('Error fetching foods');
     return await response.json();
   } catch (error) {
@@ -23,6 +29,27 @@ export const addFood = async (foodData) => {
       body: JSON.stringify(foodData),
     });
     if (!response.ok) throw new Error('Error adding food');
+    const responseData = await response.json();
+    console.log("Response Data:", responseData); // Log the response data
+    return responseData;
+  } catch (error) {
+    throw error;
+  }
+};
+
+
+// Add a new recipe entry
+export const addRecipe = async (foodData) => {
+  console.log('fooddata: ', foodData);
+  try {
+    const response = await fetch(`${API_BASE_URL}/food/create_recipe`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(foodData),
+    });
+    if (!response.ok) throw new Error('Error adding recipe');
     return await response.json();
   } catch (error) {
     throw error;
@@ -47,10 +74,14 @@ export const updateFood = async (foodId, foodData) => {
 };
 
 // Delete a food entry
-export const deleteFood = async (foodId) => {
+export const deleteFood = async (userId, foodId) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/foods/${foodId}`, {
+    const response = await fetch(`${API_BASE_URL}/food/delete/${foodId}`, {
       method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `${userId}`
+      }
     });
     if (!response.ok) throw new Error('Error deleting food');
     return await response.json();

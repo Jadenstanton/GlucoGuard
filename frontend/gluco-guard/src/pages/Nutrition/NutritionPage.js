@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getAllFoods, addFood, updateFood, deleteFood } from '../../services/foodService';
+import { getAllFoods, addFood, addRecipe, updateFood, deleteFood } from '../../services/foodService';
 import FoodListContainer from './FoodList/FoodListContainer';
 import FoodEntryContainer from './FoodEntry/FoodEntryContainer';
 import './NutritionPage.css';
@@ -8,7 +8,8 @@ const NutritionPage = () => {
     const [foods, setFoods] = useState([]);
   
     useEffect(() => {
-      getAllFoods()
+      const user_id = localStorage.getItem('userId');
+      getAllFoods(user_id)
         .then(setFoods)
         .catch((error) => {
           console.error('Failed to load foods:', error);
@@ -16,17 +17,39 @@ const NutritionPage = () => {
     }, []);
   
     const handleAddFood = (foodName) => {
-        const userId = localStorage.getItem('userId');
+      const userId = localStorage.getItem('userId');
       const foodData = { 
-        ingredient: foodName,
-        user_id: userId
-    };
+          ingredient: foodName,
+          user_id: userId
+      };
       addFood(foodData)
-        .then((newFood) => setFoods([...foods, newFood]))
-        .catch((error) => {
-          console.error('Failed to add food:', error);
-        });
-    };
+          .then((response) => {
+              if(Array.isArray(foods.data)) {
+                  const newFood = response.data; // Extract the new food item
+                  setFoods({
+                      ...foods,
+                      data: [...foods.data, newFood] // Add the new food item to the data array
+                  });
+              }
+          })
+          .catch((error) => {
+              console.error('Failed to add food:', error);
+          });
+  };
+
+  //   const handleAddRecipe = (foodName, ingredients) => {
+  //     const userId = localStorage.getItem('userId');
+  //     const foodData = { 
+  //     title: foodName,
+  //     user_id: userId,
+  //     ingredients: ingredients
+  // };
+  //   addRecipe(foodData)
+  //     .then((newFood) => setFoods([...foods, newFood]))
+  //     .catch((error) => {
+  //       console.error('Failed to add recipe:', error);
+  //     });
+  // };
   
     const handleEditFood = (foodId, updatedFoodData) => {
       updateFood(foodId, updatedFoodData)
@@ -39,9 +62,16 @@ const NutritionPage = () => {
     };
   
     const handleDeleteFood = (foodId) => {
-      deleteFood(foodId)
+      const userId = localStorage.getItem('userId');
+      console.log('foods', foods);
+      deleteFood(userId, foodId)
         .then(() => {
-          setFoods(foods.filter((food) => food.id !== foodId));
+          if (Array.isArray(foods.data)){
+            setFoods({
+               ...foods,
+            data: foods.data.filter((food) => food.id !== foodId)
+            });
+          }
         })
         .catch((error) => {
           console.error(`Failed to delete food with ID ${foodId}:`, error);
@@ -52,7 +82,8 @@ const NutritionPage = () => {
     // use handleAddFood for it for now
     return (
       <div className="nutrition-page">
-        <FoodEntryContainer onFoodSubmit={handleAddFood} />
+        <FoodEntryContainer onFoodSubmit={handleAddFood}  />
+        
         <FoodListContainer
           foods={foods}
           onEdit={handleEditFood}

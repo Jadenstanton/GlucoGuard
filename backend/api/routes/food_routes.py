@@ -185,5 +185,5 @@ def update_food(food_id):
 @food_bp.route("/delete/<int:food_id>", methods=["DELETE"])
 def delete_food(food_id):
     user_id = request.args.get("user_id")
-    response, status_code = food_controller_instance.delete_food(user_id, food_id)
+    response, status_code = food_controller_instance.delete_food(food_id)
     return jsonify(response), status_code
