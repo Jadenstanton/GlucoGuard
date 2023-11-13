@@ -2,17 +2,33 @@ import React, { useState, useEffect } from 'react';
 import { getAllFoods, addFood, addRecipe, updateFood, deleteFood } from '../../services/foodService';
 import FoodListContainer from './FoodList/FoodListContainer';
 import FoodEntryContainer from './FoodEntry/FoodEntryContainer';
+import NutritionSummaryContainer from './NutritionSummary/NutritionSummaryContainer';
 import './NutritionPage.css';
 
 const NutritionPage = () => {
-    const [foods, setFoods] = useState([]);
+    const [foods, setFoods] = useState({ data: []});
+    const [nutritionSummary, setNutritionSummary] = useState({
+      calories: 0,
+      protein: 0,
+      fat: 0,
+      carbs: 0,
+    });
   
     useEffect(() => {
       const user_id = localStorage.getItem('userId');
       getAllFoods(user_id)
-        .then(setFoods)
+        .then(response => {
+          // Check and set the `foods` state correctly.
+          if (response && response.data && Array.isArray(response.data)) {
+            setFoods(prevFoods => ({ ...prevFoods, data: response.data }));
+          } else {
+            console.error('The response from getAllFoods is not structured as expected:', response);
+            setFoods(prevFoods => ({ ...prevFoods, data: [] }));
+          }
+        })
         .catch((error) => {
           console.error('Failed to load foods:', error);
+          setFoods(prevFoods => ({ ...prevFoods, data: [] }));
         });
     }, []);
   
@@ -24,7 +40,7 @@ const NutritionPage = () => {
       };
       addFood(foodData)
           .then((response) => {
-              if(Array.isArray(foods.data)) {
+              if(response.data && Array.isArray(foods.data)) {
                   const newFood = response.data; // Extract the new food item
                   setFoods({
                       ...foods,
@@ -91,6 +107,7 @@ const NutritionPage = () => {
     return (
       <div className="nutrition-page">
         <FoodEntryContainer onFoodSubmit={handleAddFood} onRecipeSubmit={handleAddRecipe} />
+        <NutritionSummaryContainer foodItems={foods}/>
         
         <FoodListContainer
           foods={foods}
