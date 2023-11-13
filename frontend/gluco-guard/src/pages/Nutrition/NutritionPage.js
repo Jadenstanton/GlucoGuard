@@ -37,19 +37,27 @@ const NutritionPage = () => {
           });
   };
 
-  //   const handleAddRecipe = (foodName, ingredients) => {
-  //     const userId = localStorage.getItem('userId');
-  //     const foodData = { 
-  //     title: foodName,
-  //     user_id: userId,
-  //     ingredients: ingredients
-  // };
-  //   addRecipe(foodData)
-  //     .then((newFood) => setFoods([...foods, newFood]))
-  //     .catch((error) => {
-  //       console.error('Failed to add recipe:', error);
-  //     });
-  // };
+    const handleAddRecipe = (foodName, ingredients) => {
+      const userId = localStorage.getItem('userId');
+      const foodData = { 
+      title: foodName,
+      user_id: userId,
+      ingredients: ingredients
+    };
+    addRecipe(foodData)
+      .then((response) => {
+        if (Array.isArray(foods.data)) {
+            const newFood = response.data;
+            setFoods({
+              ...foods, 
+              data: [...foods.data, newFood]
+            });
+        }
+      })
+      .catch((error) => {
+        console.error('Failed to add recipe:', error);
+      });
+  };
   
     const handleEditFood = (foodId, updatedFoodData) => {
       updateFood(foodId, updatedFoodData)
@@ -82,7 +90,7 @@ const NutritionPage = () => {
     // use handleAddFood for it for now
     return (
       <div className="nutrition-page">
-        <FoodEntryContainer onFoodSubmit={handleAddFood}  />
+        <FoodEntryContainer onFoodSubmit={handleAddFood} onRecipeSubmit={handleAddRecipe} />
         
         <FoodListContainer
           foods={foods}
