@@ -1,0 +1,19 @@
+.modal-container {
+  /* Add styles here if to position or layout the container 
+       in ProfilePage. If the container is just a logical wrapper 
+       without specific visual requirements, might not need much here. */
+}
+
+/* Example styles if you want to add some visual cues or layout */
+.modal-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* to cover the whole page, uncomment the following lines */
+  /* position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);  Add a dark overlay if needed */
+}

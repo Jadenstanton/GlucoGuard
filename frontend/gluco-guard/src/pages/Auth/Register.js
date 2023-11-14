@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import './Register.css';
 import { registerUser } from '../../services/authService';
+import { AuthContext } from '../../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 import { debounce } from 'lodash';
 
 const Register = ({ isSignInActive, onSwitch }) => {
+  const navigate = useNavigate();
+  const { toggleAuth } = useContext(AuthContext);
   const [formData, setFormData] = useState({
     username: '',
     email: '',
@@ -33,7 +37,7 @@ const Register = ({ isSignInActive, onSwitch }) => {
     }
   }, 300);
 
-  const checkEmailAvailability = debounce(async (email) =>{
+  const checkEmailAvailability = debounce(async (email) => {
     if (email) {
       try {
         const response = await fetch(`${API_BASE_URL}/user/check-email`, {
@@ -41,7 +45,7 @@ const Register = ({ isSignInActive, onSwitch }) => {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({email})
+          body: JSON.stringify({ email })
         });
 
         const data = await response.json();
@@ -51,7 +55,7 @@ const Register = ({ isSignInActive, onSwitch }) => {
       }
     }
   }, 300);
-  
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -84,7 +88,10 @@ const Register = ({ isSignInActive, onSwitch }) => {
       const response = await registerUser(formData);
       if (response.message === 'User registered successfully') {
         console.log('Registration Successful');
-        // Redirect to login page or automatically log the user in
+        localStorage.setItem('token', response.token);
+        localStorage.setItem('userId', response.userId)
+        toggleAuth(true);
+        navigate('/my-profile', { state: { isNewUser: true } });
       } else {
         console.log('Registration Failed', response.message);
         // Show error messages to the user, based on the response.message
@@ -95,36 +102,36 @@ const Register = ({ isSignInActive, onSwitch }) => {
       // or server not responding properly
       if (error.message.includes('duplicate key value violates unique constrain')) {
         console.error('The username is already taken. Please choose another one.');
-      } 
+      }
     }
   };
 
   return (
     <div className={isSignInActive ? "register-container collapsed" : "register-container expanded"}>
-        {isSignInActive ? (
-            <>
-                <h2 className='register-title'>Hello there!</h2>
-                <p>Enter your personal details <br/>
-                  and start you health journey with us
-                </p>
-                <button className="register-button" onClick={onSwitch}>Sign Up</button>
-            </>
-        ) : (
-            <>
-                <h1>Sign Up for GlucoGuard</h1>
-                <form onSubmit={handleRegister}> {/* Updated to use the new function */}
-                    <input className='register-input' type="text" placeholder="Username" name="username" value={formData.username} onChange={handleChange} />
-                    {!isUsernameAvailable && <div className='username-taken'>Username is taken</div>}
-                    <input className='register-input' type="email" placeholder="Email" name="email" value={formData.email} onChange={handleChange} />
-                    {!isEmailAvailable && <div className='email-taken'>Email is already registered</div>}
-                    <input className='register-input' type="password" placeholder="Password" name="password" value={formData.password} onChange={handleChange} />
-                    <button className='register-button' type="submit">Register</button>
-                </form>
-                <p>Already have an account? <span onClick={onSwitch}>Sign In</span></p>
-            </>
-        )}
+      {isSignInActive ? (
+        <>
+          <h2 className='register-title'>Hello there!</h2>
+          <p>Enter your personal details <br />
+            and start you health journey with us
+          </p>
+          <button className="register-button" onClick={onSwitch}>Sign Up</button>
+        </>
+      ) : (
+        <>
+          <h1>Sign Up for GlucoGuard</h1>
+          <form onSubmit={handleRegister}> {/* Updated to use the new function */}
+            <input className='register-input' type="text" placeholder="Username" name="username" value={formData.username} onChange={handleChange} />
+            {!isUsernameAvailable && <div className='username-taken'>Username is taken</div>}
+            <input className='register-input' type="email" placeholder="Email" name="email" value={formData.email} onChange={handleChange} />
+            {!isEmailAvailable && <div className='email-taken'>Email is already registered</div>}
+            <input className='register-input' type="password" placeholder="Password" name="password" value={formData.password} onChange={handleChange} />
+            <button className='register-button' type="submit">Register</button>
+          </form>
+          <p>Already have an account? <span onClick={onSwitch}>Sign In</span></p>
+        </>
+      )}
     </div>
-);
+  );
 }
 
 export default Register;

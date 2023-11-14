@@ -69,7 +69,12 @@ class UserController:
         try:
             self.db.session.add(new_user)
             self.db.session.commit()
-            return {"message": "User registered successfully"}, 201
+            jwt_token = self.generate_jwt_token(new_user.id)
+            return {
+                "message": "User registered successfully",
+                "token": jwt_token,
+                "userId": new_user.id,
+            }, 201
         except Exception as e:
             self.db.session.rollback()
             return {"message": "Failed to register user. Error" + str(e)}, 500

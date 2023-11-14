@@ -6,10 +6,13 @@ import HealthMetricsContainer from './HealthMetrics/HealthMetricsContainer';
 import AccountSettingsContainer from './AccountSettings/AccountSettingsContainer';
 import GoalsContainer from './Goals/GoalsContainer';
 import ActivityGraphContainer from './ActivityGraph/ActivityGraphContainer';
+import BaseMetricsModalContainer from './BaseMetricsModal/BaseMetricsModalContainer';
 
 
 
 const ProfilePage = () => {
+    const location = useLocation()
+    const isNewUser = location.state?.isNewUser || false;
     return (
         <div className="profile-page profile-background">
             <ProfileHeaderContainer />
@@ -19,10 +22,11 @@ const ProfilePage = () => {
                 <HealthMetricsContainer />
                 <ActivityGraphContainer />
                 <GoalsContainer />
-                <AccountSettingsContainer />   
+                <AccountSettingsContainer />
+                <BaseMetricsModalContainer isNewUser={isNewUser} />
             </div>
-            
-            
+
+
             {/* <ProfileHeader /> */}
         </div>
     );
