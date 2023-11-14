@@ -6,7 +6,6 @@ const Tile = ({ data, size, children }) => {
   const navigate = useNavigate();
   const tileClass = `tile ${size}`;
 
-  // Function to navigate to the tile's link when clicked
   const handleClick = () => {
     navigate(data.link);
   };
@@ -16,7 +15,7 @@ const Tile = ({ data, size, children }) => {
       {data.icon && <img src={data.icon} alt={data.title} />}
       <h3>{data.title}</h3>
       {data.summary && <p>{data.summary}</p>}
-      {children} 
+      {children}
     </div>
   );
 };

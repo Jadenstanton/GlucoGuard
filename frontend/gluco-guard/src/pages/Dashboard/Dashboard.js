@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useNutritionContext } from '../../context/NutritionContext';
+import NutritionChart from '../Nutrition/NutritionChart/NutritionChart';
 import Tile from './Tile/Tile';
 import './Dashboard.css';
 
 const Dashboard = () => {
+  const { foods } = useNutritionContext();
+  const { lastFoodItem } = useNutritionContext();
   const [tilesData, setTilesData] = useState([
     {
       id: 1,
@@ -46,12 +50,28 @@ const Dashboard = () => {
     },
     // ... more tiles
   ]);
-  
+  // console.log("Dashboard Foods:", foods);
 
   const getRandomSize = () => {
     const sizes = ['size-1x1', 'size-2x1', 'size-1x2', 'size-2x2'];
     return sizes[Math.floor(Math.random() * sizes.length)];
   };
+
+  useEffect(() => {
+    // This effect updates the 'Nutritional Overview' tile with the last food item's name
+    if (lastFoodItem) {
+      setTilesData(prevTilesData => prevTilesData.map(tile => {
+        if (tile.title === 'Nutritional Overview') {
+          return {
+            ...tile,
+            summary: `Last food: ${lastFoodItem.food_name}`,
+          };
+        }
+        return tile;
+      }));
+    }
+    // console.log('Effect has run');
+  }, [lastFoodItem]);
 
   useEffect(() => {
     // Placeholder for fetching data
@@ -83,12 +103,22 @@ const Dashboard = () => {
 
     fetchData();
   }, []);
+  // console.log("Dashboard chart data:", foods);
 
   return (
     <div className="dashboard">
-      {tilesData.map(tile => (
-        <Tile key={tile.id} data={tile} size={tile.size} />
-      ))}
+      {tilesData.map(tile => {
+        if (tile.title === 'Nutritional Overview') {
+          // Render the NutritionChart inside the 'Nutritional Overview' tile
+          return (
+            <Tile key={tile.id} data={tile} size={tile.size}>
+              <NutritionChart data={foods.data} showMacroChart={false} />
+            </Tile>
+          );
+        }
+        // Render other tiles normally
+        return <Tile key={tile.id} data={tile} size={tile.size} />;
+      })}
     </div>
   );
 };

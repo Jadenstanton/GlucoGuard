@@ -4,34 +4,19 @@ import FoodListContainer from './FoodList/FoodListContainer';
 import FoodEntryContainer from './FoodEntry/FoodEntryContainer';
 import NutritionSummaryContainer from './NutritionSummary/NutritionSummaryContainer';
 import NutritionChartContainer from './NutritionChart/NutritionChartContainer';
-import NutritionContainer from './NutritionContainer';
+import { useNutritionContext } from '../../context/NutritionContext';
+// import NutritionContainer from './NutritionContainer';
 import './NutritionPage.css';
 
 const NutritionPage = () => {
-  const [foods, setFoods] = useState({ data: [] });
-  const [nutritionSummary, setNutritionSummary] = useState({
-    calories: 0,
-    protein: 0,
-    fat: 0,
-    carbs: 0,
-  });
+  const {
+    foods, setFoods,
+    setLastFoodItem,
+    lastFoodItem,
+    isLoading, setIsLoading,
+    error, setError
+  } = useNutritionContext();
 
-  useEffect(() => {
-    const user_id = localStorage.getItem('userId');
-    getAllFoods(user_id)
-      .then(response => {
-        if (response && response.data && Array.isArray(response.data)) {
-          setFoods(prevFoods => ({ ...prevFoods, data: response.data }));
-        } else {
-          console.error('The response from getAllFoods is not structured as expected:', response);
-          setFoods(prevFoods => ({ ...prevFoods, data: [] }));
-        }
-      })
-      .catch((error) => {
-        console.error('Failed to load foods:', error);
-        setFoods(prevFoods => ({ ...prevFoods, data: [] }));
-      });
-  }, []);
 
   const handleAddFood = (foodName) => {
     const userId = localStorage.getItem('userId');
@@ -41,12 +26,13 @@ const NutritionPage = () => {
     };
     addFood(foodData)
       .then((response) => {
-        if (response.data && Array.isArray(foods.data)) {
-          const newFood = response.data; // Extract the new food item
-          setFoods({
-            ...foods,
-            data: [...foods.data, newFood] // Add the new food item to the data array
-          });
+        if (response.data) {
+          setFoods(currentFoods => ({
+            ...currentFoods,
+            data: [...currentFoods.data, response.data]
+          }));
+
+          setLastFoodItem(response.data);
         }
       })
       .catch((error) => {
@@ -63,12 +49,13 @@ const NutritionPage = () => {
     };
     addRecipe(foodData)
       .then((response) => {
-        if (Array.isArray(foods.data)) {
-          const newFood = response.data;
-          setFoods({
-            ...foods,
-            data: [...foods.data, newFood]
-          });
+        if (response.data) {
+          setFoods(currentFoods => ({
+            ...currentFoods,
+            data: [...currentFoods.data, response.data]
+          }));
+
+          setLastFoodItem(response.data);
         }
       })
       .catch((error) => {
@@ -88,15 +75,23 @@ const NutritionPage = () => {
 
   const handleDeleteFood = (foodId) => {
     const userId = localStorage.getItem('userId');
-    console.log('foods', foods);
     deleteFood(userId, foodId)
       .then(() => {
-        if (Array.isArray(foods.data)) {
-          setFoods({
-            ...foods,
-            data: foods.data.filter((food) => food.id !== foodId)
-          });
-        }
+        setFoods(currentFoods => {
+          const updatedFoodsData = currentFoods.data.filter((food) => food.id !== foodId);
+
+          if (updatedFoodsData.length > 0) {
+            const newLastFoodItem = updatedFoodsData[updatedFoodsData.length - 1];
+            setLastFoodItem(newLastFoodItem);
+          } else {
+            setLastFoodItem(null);
+          }
+
+          return {
+            ...currentFoods,
+            data: updatedFoodsData
+          };
+        });
       })
       .catch((error) => {
         console.error(`Failed to delete food with ID ${foodId}:`, error);

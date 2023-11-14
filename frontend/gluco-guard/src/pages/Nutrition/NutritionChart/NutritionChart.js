@@ -3,8 +3,8 @@ import { Doughnut } from "react-chartjs-2";
 import "./NutritionChart.css";
 import { sum } from "lodash";
 
-const NutritionChart = ({ data }) => {
-  console.log("Chart data:", data);
+const NutritionChart = ({ data, showMacroChart }) => {
+  // console.log("Chart data:", data);
   if (!data || !Array.isArray(data)) {
     console.error("data is undefined or not an array:", data);
     return <div>Loading...</div>;
@@ -88,14 +88,20 @@ const NutritionChart = ({ data }) => {
 
   return (
     <div className="charts-flex-container">
-      <div className="chart">
-        <Doughnut data={chartData} options={chartOptions} />
-      </div>
+      {showMacroChart && (
+        <div className="chart">
+          <Doughnut data={chartData} options={chartOptions} />
+        </div>
+      )}
       <div className="chart">
         <Doughnut data={calorieChartData} options={calorieChartOptions} />
       </div>
     </div>
   );
+};
+
+NutritionChart.defaultProps = {
+  showMacroChart: true
 };
 
 export default NutritionChart;

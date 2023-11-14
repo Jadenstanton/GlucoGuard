@@ -1,12 +1,13 @@
 .dashboard {
-    display: grid;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-gap: 10px;
+  min-height: 85vh;
+  background-color: lightgray;
+}
+
+@media (min-width: 600px) {
+  .dashboard-container {
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    grid-gap: 10px;
-    min-height: 85vh;
   }
-  
-  @media (min-width: 600px) {
-    .dashboard-container {
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    }
-  }
+}
