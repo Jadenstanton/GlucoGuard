@@ -4,6 +4,8 @@
   align-items: center;
   padding: 20px;
   background-color: #e6ebed;
+  overflow-y: auto;
+  min-height: 100%;
 }
 
 .nutrition-page > * {

@@ -20,19 +20,20 @@ function App() {
     <Router>
       <div className="App">
         <Header />
-        <Routes>
-          <Route path="/" exact element={<HomePage />} />
-          <Route path="/auth" element={<AuthPage />} />
-          <Route element={<PrivateRoute />}>
-            <Route path='/settings' element={<SettingsPage />} />
-            <Route path="/my-profile" element={<ProfilePage />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path='/nutrition' element={<NutritionPage />} />
-            <Route path='/logging' element={<LoggingPage />} />
-          </Route>
+        <main className='page-content'>
+          <Routes>
+            <Route path="/" exact element={<HomePage />} />
+            <Route path="/auth" element={<AuthPage />} />
+            <Route element={<PrivateRoute />}>
+              <Route path='/settings' element={<SettingsPage />} />
+              <Route path="/my-profile" element={<ProfilePage />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path='/nutrition' element={<NutritionPage />} />
+              <Route path='/logging' element={<LoggingPage />} />
+            </Route>
 
-        </Routes>
-
+          </Routes>
+        </main>
         <Footer />
       </div>
     </Router>

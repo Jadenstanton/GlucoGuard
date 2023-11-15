@@ -6,7 +6,7 @@
   border: 1px solid #ddd;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
-  height: fit-content;
+  max-height: fit-content;
 }
 
 .log-container h1 {
