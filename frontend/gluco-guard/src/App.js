@@ -9,6 +9,7 @@ import HomePage from './pages/Home/HomePage';
 import Dashboard from './pages/Dashboard/Dashboard';
 import SettingsPage from './pages/Settings/SettingsPage';
 import NutritionPage from './pages/Nutrition/NutritionPage';
+import LoggingPage from './pages/Logging/LoggingPage';
 import Footer from './components/layout/Footer';
 import Header from './components/layout/Header';
 
@@ -27,8 +28,9 @@ function App() {
             <Route path="/my-profile" element={<ProfilePage />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path='/nutrition' element={<NutritionPage />} />
+            <Route path='/logging' element={<LoggingPage />} />
           </Route>
- 
+
         </Routes>
 
         <Footer />

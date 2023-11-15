@@ -56,3 +56,9 @@ def update_activity(activity_id):
         user_id, activity_id, data
     )
     return jsonify(response), status_code
+
+
+@activity_bp.route("/aggregate/<int:user_id>/<int:year>/<int:month>")
+def aggregate(user_id, year, month):
+    aggregated_data = activity_controller.aggregate_monthly_data(user_id, year, month)
+    return jsonify(aggregated_data)
