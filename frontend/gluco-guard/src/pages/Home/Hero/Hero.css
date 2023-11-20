@@ -1,34 +1,37 @@
 .hero {
-    background-size: cover;
-    color: #fff;
-    text-align: center;
-    padding: 100px 20px;
-    background-color: #ffbe4f;
-    width: 100%;
-  }
-  
-  .hero-content h1 {
-    font-size: 2.5em;
-    margin-bottom: 0.5em;
-  }
-  
-  .hero-content p {
-    font-size: 1.2em;
-    margin-bottom: 1.5em;
-  }
-  
-  .hero-cta {
-    background-color: #22a7f0; 
-    border: none;
-    padding: 15px 30px;
-    color: white;
-    font-size: 1em;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-  }
-  
-  .hero-cta:hover {
-    background-color: #1992d4; 
-  }
-  
+  background-size: cover;
+  color: #fff;
+  text-align: center;
+  padding: 100px 20px;
+  background-color: #ffbe4f;
+  width: 100%;
+}
+
+.hero-content h1 {
+  font-size: 2.5em;
+  margin-bottom: 0.5em;
+}
+
+.hero-content p {
+  font-size: 1.2em;
+  margin-bottom: 1.5em;
+}
+
+.hero-cta {
+  background-color: #22a7f0;
+  border: none;
+  padding: 15px 30px;
+  color: white;
+  font-size: 1em;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.hero-cta button {
+  width: 100px;
+}
+
+.hero-cta:hover {
+  background-color: #1992d4;
+}

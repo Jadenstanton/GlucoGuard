@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { addActivity } from "../../../services/activityService";
+import { ActivityContext } from "../../../context/ActivityContext";
 import './DailyLogForm.css';
 
 const DailyLogForm = () => {
@@ -13,6 +14,7 @@ const DailyLogForm = () => {
     const [heartRate, setHeartRate] = useState(0);
     const [duration, setDuration] = useState("");
     const [date, setDate] = useState("");
+    const { logActivity } = useContext(ActivityContext);
 
 
     const intensityLevels = {
@@ -47,6 +49,7 @@ const DailyLogForm = () => {
             // sp02: parseFloat(sp02),
             // hrv: parseFloat(hrv),
         };
+        logActivity(logData);
 
 
 

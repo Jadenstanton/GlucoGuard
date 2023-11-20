@@ -62,3 +62,13 @@ def update_activity(activity_id):
 def aggregate(user_id, year, month):
     aggregated_data = activity_controller.aggregate_monthly_data(user_id, year, month)
     return jsonify(aggregated_data)
+
+
+@activity_bp.route("/view_activities", methods=["POST"])
+def view_activities():
+    data = request.get_json()
+    user_id = data.get("user_id")
+    if not user_id:
+        return jsonify({"message": "User ID is required"}), 400
+    response, status_code = activity_controller.get_all_activities(user_id)
+    return jsonify(response), status_code

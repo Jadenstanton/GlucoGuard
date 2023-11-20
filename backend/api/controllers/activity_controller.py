@@ -204,3 +204,18 @@ class ActivityController:
         except Exception as e:
             self.db.session.rollback()
             return {"message": f"Failed to update activity. Error: {str(e)}"}, 500
+
+    def get_all_activities(self, user_id):
+        all_activities = Activity.query.filter_by(user_id=user_id).all()
+
+        if not all_activities:
+            return {"message": "No activity entries found for the user"}, 404
+
+        # Prepare response data
+        activity_list = [activity.serialize() for activity in all_activities]
+        response = {
+            "message": "All activity entries retrieved successfully",
+            "data": activity_list,
+        }
+
+        return response, 200

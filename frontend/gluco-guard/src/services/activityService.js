@@ -16,3 +16,20 @@ export const addActivity = async (activityData) => {
         throw error;
     }
 };
+
+export const getAllActivities = async (userId) => {
+    try {
+        const response = await fetch(`${API_BASE_URL}/activity/view_activities`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ user_id: userId }),
+        });
+        if (!response.ok) throw new Error('Error fetching activities');
+        return await response.json();
+    } catch (error) {
+        // Handle or throw the error 
+        throw error;
+    }
+};

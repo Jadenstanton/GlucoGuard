@@ -5,13 +5,16 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { AuthProvider } from './context/AuthContext';
 import { NutritionProvider } from './context/NutritionContext';
+import { ActivityProvider } from './context/ActivityContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <AuthProvider>
       <NutritionProvider>
-        <App />
+        <ActivityProvider>
+          <App />
+        </ActivityProvider>
       </NutritionProvider>
     </AuthProvider>
   </React.StrictMode>

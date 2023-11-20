@@ -10,6 +10,7 @@ import Dashboard from './pages/Dashboard/Dashboard';
 import SettingsPage from './pages/Settings/SettingsPage';
 import NutritionPage from './pages/Nutrition/NutritionPage';
 import LoggingPage from './pages/Logging/LoggingPage';
+import ActivityPage from './pages/Activity/ActivityPage';
 import Footer from './components/layout/Footer';
 import Header from './components/layout/Header';
 
@@ -30,6 +31,8 @@ function App() {
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path='/nutrition' element={<NutritionPage />} />
               <Route path='/logging' element={<LoggingPage />} />
+              <Route path='/activity' element={<ActivityPage />} />
+
             </Route>
 
           </Routes>
