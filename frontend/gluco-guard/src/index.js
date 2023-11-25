@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import { AuthProvider } from './context/AuthContext';
 import { NutritionProvider } from './context/NutritionContext';
 import { ActivityProvider } from './context/ActivityContext';
+import { CombinedActivityProvider } from './context/CombinedActivityContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -13,7 +14,9 @@ root.render(
     <AuthProvider>
       <NutritionProvider>
         <ActivityProvider>
-          <App />
+          <CombinedActivityProvider>
+            <App />
+          </CombinedActivityProvider>
         </ActivityProvider>
       </NutritionProvider>
     </AuthProvider>

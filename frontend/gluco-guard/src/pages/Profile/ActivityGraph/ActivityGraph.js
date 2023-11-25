@@ -2,40 +2,45 @@ import React from 'react';
 import { Bar } from 'react-chartjs-2';
 import 'chart.js/auto';
 
-const ActivityGraph = () => {
-  // Function to determine the color intensity based on the data value
-  const getColor = (value) => {
-    const alpha = (value / Math.max(...data.datasets[0].data)) * 0.8 + 0.2; // Scale between 0.2 and 1
-    return `rgba(75, 192, 192, ${alpha})`;
-  };
+const ActivityGraph = ({ combinedActivity }) => {
+  if (!combinedActivity) {
+    return <div>Loading...</div>;
+  }
 
-  // Mock data for the graph 
+  const labels = combinedActivity.map(item => item.date);
+  const foodCounts = combinedActivity.map(item => item.foodCount);
+  const activityCounts = combinedActivity.map(item => item.activityCount);
+
   const data = {
-    labels: ['Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
+    labels: labels,
     datasets: [
       {
-        label: 'Submissions',
-        data: [12, 19, 3, 5, 2, 3, 30, 45, 23, 18, 3, 9],
-        backgroundColor: (context) => {
-          const value = context.raw; 
-          return getColor(value); 
-        },
-        borderColor: 'rgba(75, 192, 192, 1)',
-        borderWidth: 1,
+        label: 'Food Submissions',
+        data: foodCounts,
+        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        borderColor: 'rgba(255, 99, 132, 1)',
+      },
+      {
+        label: 'Activity Submissions',
+        data: activityCounts,
+        backgroundColor: 'rgba(54, 162, 235, 0.5)',
+        borderColor: 'rgba(54, 162, 235, 1)',
       },
     ],
   };
 
-  // Options for the chart
   const options = {
     scales: {
       y: {
-        beginAtZero: true,
+        stacked: true,
       },
+      x: {
+        stacked: true,
+      }
     },
     plugins: {
       legend: {
-        display: false,
+        display: true,
       },
     },
     maintainAspectRatio: false,

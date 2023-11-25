@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { addActivity } from "../../../services/activityService";
-import { ActivityContext } from "../../../context/ActivityContext";
+import { useActivityContext } from "../../../context/ActivityContext";
 import './DailyLogForm.css';
 
 const DailyLogForm = () => {
@@ -14,7 +14,8 @@ const DailyLogForm = () => {
     const [heartRate, setHeartRate] = useState(0);
     const [duration, setDuration] = useState("");
     const [date, setDate] = useState("");
-    const { logActivity } = useContext(ActivityContext);
+    const { logActivity } = useActivityContext();
+
 
 
     const intensityLevels = {
@@ -49,13 +50,19 @@ const DailyLogForm = () => {
             // sp02: parseFloat(sp02),
             // hrv: parseFloat(hrv),
         };
-        logActivity(logData);
+        // logActivity(logData);
 
 
 
         try {
             const responseData = await addActivity(logData);
-            console.log('Activity added:', responseData);
+            // console.log('Activity added:', responseData);
+            if (responseData && responseData.data) {
+                // console.log("Calling logActivity with:", responseData.data);
+                logActivity(responseData.data);
+                // console.log("Called logActivity");
+
+            }
         } catch (error) {
             console.error('Error during the fetch:', error);
         }

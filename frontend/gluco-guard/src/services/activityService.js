@@ -33,3 +33,39 @@ export const getAllActivities = async (userId) => {
         throw error;
     }
 };
+
+export const updateActivity = async (activityId, activityData) => {
+    try {
+        const response = await fetch(`${API_BASE_URL}/activity/update/${activityId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(activityData),
+        });
+        if (!response.ok) throw new Error('Error updating activity');
+        return await response.json();
+    } catch (error) {
+        throw error;
+    }
+};
+
+export const deleteActivity = async (userId, activityId) => {
+    console.log('sDeleting activity with ID:', activityId);
+    // console.log('sDeleting activity with uID:', userId);
+
+    try {
+        const response = await fetch(`${API_BASE_URL}/activity/delete/${activityId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                // 'Authorization': `${userId}`
+            },
+            body: JSON.stringify({ user_id: userId }),
+        });
+        if (!response.ok) throw new Error('Error deleting activity');
+        return await response.json();
+    } catch (error) {
+        throw error;
+    }
+};

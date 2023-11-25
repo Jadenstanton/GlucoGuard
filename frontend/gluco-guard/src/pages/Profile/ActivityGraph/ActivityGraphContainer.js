@@ -1,11 +1,12 @@
 import React from 'react';
-import './ActivityGraphContainer.css'; 
+import './ActivityGraphContainer.css';
 import ActivityGraph from './ActivityGraph';
 
-const ActivityGraphContainer = () => {
+const ActivityGraphContainer = ({ combinedActivity }) => {
+  // console.log("Monthly Counts in ActivityGraph:", combinedActivity);
   return (
     <div className="activity-graph-container">
-      <ActivityGraph />
+      <ActivityGraph combinedActivity={combinedActivity} />
     </div>
   );
 };

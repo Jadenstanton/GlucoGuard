@@ -1,11 +1,11 @@
 import React from 'react';
-import './HealthMetricsContainer.css'; 
+import './HealthMetricsContainer.css';
 import HealthMetrics from './HealthMetrics';
 
-const HealthMetricsContainer = () => {
+const HealthMetricsContainer = ({ activityEvaluation }) => {
   return (
     <div className="health-metrics-container">
-      <HealthMetrics />
+      <HealthMetrics activityEvaluation={activityEvaluation} />
     </div>
   );
 };

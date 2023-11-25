@@ -27,7 +27,8 @@ def create_activity():
 
 @activity_bp.route("/delete/<int:activity_id>", methods=["DELETE"])
 def delete_activity(activity_id):
-    user_id = request.args.get("user_id")
+    data = request.get_json()
+    user_id = data.get("user_id")
     print(f"Deleting activity {activity_id} for user {user_id}")
     if user_id is None:
         return jsonify({"message": "Missing user_id in request."}), 400

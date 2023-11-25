@@ -1,4 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 from ...database.database import db
 
 
@@ -11,6 +12,8 @@ class Food(db.Model):
         db.ForeignKey("user_profiles.id"),
         nullable=False,
     )
+
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
     food_name = db.Column(db.String(100), nullable=False)
     portion_size = db.Column(db.Float, nullable=False)
 
@@ -50,10 +53,11 @@ class Food(db.Model):
             "calcium_mg": self.calcium_mg,
             "iron_mg": self.iron_mg,
             "potassium_mg": self.potassium_mg,
+            "created_at": self.created_at.isoformat() if self.created_at else None,
         }
 
     # Constructor
-    def __init__(self, user_id, food_name, portion_size, **kwargs):
+    def __init__(self, user_id, food_name, portion_size, created_at=None, **kwargs):
         self.user_id = user_id
         self.food_name = food_name
         self.portion_size = portion_size
@@ -71,6 +75,8 @@ class Food(db.Model):
         self.calcium_mg = kwargs.get("calcium_mg")
         self.iron_mg = kwargs.get("iron_mg")
         self.potassium_mg = kwargs.get("potassium_mg")
+        if created_at:
+            self.created_at = created_at
 
     def to_dict(self):
         return {
@@ -92,4 +98,5 @@ class Food(db.Model):
             "calcium_mg": self.calcium_mg,
             "iron_mg": self.iron_mg,
             "potassium_mg": self.potassium_mg,
+            "created_at": self.created_at.isoformat() if self.created_at else None,
         }
