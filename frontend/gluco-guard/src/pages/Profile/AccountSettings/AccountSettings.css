@@ -1,46 +1,57 @@
 .account-preferences {
-    max-width: 400px; 
-    margin: 0 auto; 
-    padding: 20px; 
-    background: #fff; 
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
-    border-radius: 8px; 
+  width: 100%;
+  max-width: 400px;
+  margin: auto;
+  padding: 20px;
+  background: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.account-preferences h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.account-preferences table {
+  width: calc(100% - 40px);
+  margin-bottom: 20px;
+  border-collapse: collapse;
+}
+
+.account-preferences th,
+.account-preferences td {
+  text-align: left;
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+}
+
+.account-preferences tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.account-preferences button {
+  padding: 10px 15px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.account-preferences button:hover {
+  background-color: #0056b3;
+}
+
+@media (max-width: 600px) {
+  .account-preferences {
+    margin: 0 10px;
+    padding: 20px 10px; /* Adjust padding for smaller screens */
   }
-  
-  .account-preferences form {
-    display: flex;
-    flex-direction: column;
+
+  .account-preferences table {
+    width: calc(100% - 20px);
   }
-  
-  .account-preferences label {
-    margin-bottom: 0.5rem;
-    font-weight: bold; 
-  }
-  
-  .account-preferences input {
-    margin-bottom: 1rem;
-    padding: 0.5rem;
-    border: 1px solid #ccc; 
-    border-radius: 4px; 
-  }
-  
-  .account-preferences button {
-    padding: 10px 15px;
-    background-color: #007bff; 
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer; 
-    transition: background-color 0.3s ease; 
-  }
-  
-  .account-preferences button:hover {
-    background-color: #0056b3; 
-  }
-  
-  @media (max-width: 600px) {
-    .account-preferences {
-      margin: 0 10px;
-    }
-  }
-  
+}

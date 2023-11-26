@@ -1,3 +1,8 @@
+.daily-log-section {
+  padding: 20px;
+  text-align: center;
+}
+
 .daily-log-form {
   display: flex;
   flex-direction: column;

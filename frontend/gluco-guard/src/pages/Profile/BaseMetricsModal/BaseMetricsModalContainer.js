@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { useBaseMetrics } from '../../../context/BaseMetricsContext';
 import BaseMetricsModal from './BaseMetricsModal'; // Import the modal component
 import './BaseMetricsModalContainer.css'
 
 const BaseMetricsModalContainer = ({ isNewUser }) => {
     const [showModal, setShowModal] = useState(false);
+    const { baseMetrics, handleBaseMetricsChange } = useBaseMetrics();
 
     useEffect(() => {
-        // Automatically open the modal if the user is new
         if (isNewUser) {
             setShowModal(true);
         }
@@ -14,7 +15,6 @@ const BaseMetricsModalContainer = ({ isNewUser }) => {
 
     const handleModalClose = () => {
         setShowModal(false);
-        // Additional logic when modal is closed (e.g., updating user status)
         isNewUser = false
     };
 
@@ -23,7 +23,6 @@ const BaseMetricsModalContainer = ({ isNewUser }) => {
         // For example, send them to the backend
         console.log(metrics); // Replace with actual submission logic
 
-        // Close the modal after submission
         setShowModal(false);
     };
 
@@ -32,6 +31,8 @@ const BaseMetricsModalContainer = ({ isNewUser }) => {
             isOpen={showModal}
             onClose={handleModalClose}
             onSubmit={handleModalSubmit}
+            baseMetrics={baseMetrics}
+            onBaseMetricsChange={handleBaseMetricsChange}
         />
     );
 };

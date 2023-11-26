@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 // import { ActivityContext } from '../../context/ActivityContext';
 import { useCombinedActivityContext } from '../../context/CombinedActivityContext';
 import { useActivityContext } from '../../context/ActivityContext';
+import { useBaseMetrics } from '../../context/BaseMetricsContext';
 import './ProfilePage.css';
 import ProfileHeaderContainer from './ProfileHeader/ProfileHeaderContainer';
 import HealthMetricsContainer from './HealthMetrics/HealthMetricsContainer';
@@ -16,6 +17,8 @@ import BaseMetricsModalContainer from './BaseMetricsModal/BaseMetricsModalContai
 const ProfilePage = () => {
     const { combinedActivity } = useCombinedActivityContext();
     const { activityEvaluation } = useActivityContext();
+    const { baseMetrics, handleBaseMetricsChange } = useBaseMetrics();
+
     const location = useLocation()
     const isNewUser = location.state?.isNewUser || false;
     // console.log("Combined Activity Data in ProfilePage:", combinedActivity);
@@ -28,7 +31,7 @@ const ProfilePage = () => {
                 <HealthMetricsContainer activityEvaluation={activityEvaluation} />
                 <ActivityGraphContainer combinedActivity={combinedActivity} />
                 <GoalsContainer />
-                <AccountSettingsContainer />
+                <AccountSettingsContainer baseMetrics={baseMetrics} onBaseMetricsChange={handleBaseMetricsChange} />
                 <BaseMetricsModalContainer isNewUser={isNewUser} />
             </div>
 

@@ -4,6 +4,9 @@ import NutritionChart from '../Nutrition/NutritionChart/NutritionChart';
 import Tile from './Tile/Tile';
 import './Dashboard.css';
 
+// TODO
+// Fix dashboard styling
+
 const Dashboard = () => {
   const { foods } = useNutritionContext();
   const { lastFoodItem } = useNutritionContext();
@@ -40,15 +43,6 @@ const Dashboard = () => {
       link: '/settings',
       size: 'size-1x1',
     },
-    {
-      id: 5,
-      title: 'Logging & Tracking',
-      summary: 'Record your daily metrics',
-      icon: '/icons/logging.png',
-      link: '/logging',
-      size: 'size-1x1',
-    },
-    // ... more tiles
   ]);
   // console.log("Dashboard Foods:", foods);
 
@@ -111,13 +105,13 @@ const Dashboard = () => {
         if (tile.title === 'Nutritional Overview') {
           // Render the NutritionChart inside the 'Nutritional Overview' tile
           return (
-            <Tile key={tile.id} data={tile} size={tile.size}>
+            <Tile key={tile.id} data={tile} className={`tile ${tile.size}`}>
               <NutritionChart data={foods.data} showMacroChart={false} />
             </Tile>
           );
         }
         // Render other tiles normally
-        return <Tile key={tile.id} data={tile} size={tile.size} />;
+        return <Tile key={tile.id} data={tile} className={`tile ${tile.size}`} />;
       })}
     </div>
   );

@@ -17,6 +17,7 @@ const BaseMetricsModal = ({ isOpen, onClose, onSubmit }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         onSubmit(metrics);
+        localStorage.setItem('baseMetrics', JSON.stringify(metrics));
         onClose();
     };
 

@@ -7,6 +7,7 @@ import { AuthProvider } from './context/AuthContext';
 import { NutritionProvider } from './context/NutritionContext';
 import { ActivityProvider } from './context/ActivityContext';
 import { CombinedActivityProvider } from './context/CombinedActivityContext';
+import { BaseMetricsProvider } from './context/BaseMetricsContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -15,7 +16,9 @@ root.render(
       <NutritionProvider>
         <ActivityProvider>
           <CombinedActivityProvider>
-            <App />
+            <BaseMetricsProvider>
+              <App />
+            </BaseMetricsProvider>
           </CombinedActivityProvider>
         </ActivityProvider>
       </NutritionProvider>
