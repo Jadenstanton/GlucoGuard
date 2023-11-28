@@ -1,5 +1,5 @@
 import React from 'react';
-import './LogModal';
+import './LogModal.css';
 
 const LogModal = ({ isOpen, onClose, children }) => {
     if (!isOpen) return null;
@@ -7,7 +7,7 @@ const LogModal = ({ isOpen, onClose, children }) => {
     return (
         <div className="modal-overlay">
             <div className="modal-content">
-                <button onClick={onClose}>Close</button>
+                {/* <button onClick={onClose}>Close</button> */}
                 {children}
             </div>
         </div>

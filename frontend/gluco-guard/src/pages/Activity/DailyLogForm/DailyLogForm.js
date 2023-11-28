@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { addActivity } from "../../../services/activityService";
 import { useActivityContext } from "../../../context/ActivityContext";
 import LogModal from "../LogModal/LogModal";
@@ -13,8 +13,6 @@ const DailyLogForm = () => {
     const [intensity, setIntensity] = useState(5);
     const [breathRate, setBreathRate] = useState(0);
     const [heartRate, setHeartRate] = useState(0);
-    const [duration, setDuration] = useState("");
-    const [date, setDate] = useState("");
     const { logActivity } = useActivityContext();
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -33,51 +31,34 @@ const DailyLogForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const userId = localStorage.getItem('userId');
-
-
-        // Convert hours and minutes to total minutes
         const totalDuration = parseInt(hours, 10) * 60 + parseInt(minutes, 10);
-
-        // Assume activityZoneMinutes is calculated or obtained in some way
-        // For now, i'll just set it equal to totalDuration
         const activityZoneMinutes = totalDuration;
 
-        // Prepare the logData object with all required fields
         const logData = {
             user_id: userId,
-            activity_type: activityType, // This should be a string like "Running", "Walking", etc.
+            activity_type: activityType,
             title: activityTitle,
             description: activityDescription,
             duration: totalDuration,
             activity_zone_minutes: activityZoneMinutes,
-            heart_rate: parseInt(heartRate, 10), // Make sure this is a number
-            breathing_rate: parseInt(breathRate, 10), // Make sure this is a number
-            // Include sp02 and hrv if we end collecting them in our form
-            // sp02: parseFloat(sp02),
-            // hrv: parseFloat(hrv),
+            heart_rate: parseInt(heartRate, 10),
+            breathing_rate: parseInt(breathRate, 10),
         };
-        // logActivity(logData);
-
-
 
         try {
             const responseData = await addActivity(logData);
-            // console.log('Activity added:', responseData);
             if (responseData && responseData.data) {
-                // console.log("Calling logActivity with:", responseData.data);
                 logActivity(responseData.data);
-                // console.log("Called logActivity");
-
             }
         } catch (error) {
             console.error('Error during the fetch:', error);
         }
     };
 
+
     return (
         <div className="daily-log-section">
-            <button onClick={toggleModal}>Log Activity</button>
-
+            <button onClick={toggleModal}>{isModalOpen ? 'Close' : 'Log Activity'}</button>
             <LogModal isOpen={isModalOpen} onClose={toggleModal}>
                 <div className="daily-log-form">
                     <h1>Daily Log</h1>

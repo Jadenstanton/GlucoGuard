@@ -1,19 +1,14 @@
-.chart-container {
+.activity-chart-container {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  min-width: 80vw;
-  height: 300px;
-  box-sizing: border-box;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  height: 500px;
+  max-width: 90%;
+  padding: 0;
+  margin: 20px auto;
   background: #fff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
-  margin: auto;
-  margin-top: 20px;
-}
-
-.chart-container .chart {
-  width: 100%;
-  height: 100%;
+  overflow: hidden;
 }

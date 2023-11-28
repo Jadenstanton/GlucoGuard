@@ -1,33 +1,4 @@
-.chart-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100vw;
-  height: 100%;
-  padding: 20px;
-}
-
-.charts-flex-container {
-  width: 100%;
-  height: 200px;
-  display: flex;
-  flex-direction: row;
-  gap: 20px;
-}
-
-.chart {
-  flex-basis: 50%;
-  width: 300px;
-  height: 100%;
-}
-
-@media (max-width: 768px) {
-  .charts-flex-container {
-    flex-direction: column;
-  }
-
-  .chart {
-    flex-basis: auto;
-    max-width: 100%;
-  }
+.activity-chart {
+  flex: 1;
+  min-width: 100%;
 }

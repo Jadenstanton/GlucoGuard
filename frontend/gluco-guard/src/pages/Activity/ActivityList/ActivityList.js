@@ -3,7 +3,6 @@ import ActivityListItem from '../ActivityListItem/ActivityListItem';
 import './ActivityList.css';
 
 const ActivityList = ({ activities, onDelete, onEdit }) => {
-    // console.log('Activities in ActivityList:', activities); 
     return (
         <div className="activity-list">
             {activities && activities.map((activity, index) => (

@@ -3,12 +3,11 @@ import ActivityChart from './ActivityChart';
 import './ActivityChartContainer.css';
 
 const ActivityChartContainer = ({ activities }) => {
-    // console.log('Activity Data Prop in Container:', activities);
     if (!activities) {
         return <div>Loading chart data...</div>;
     }
     return (
-        <div className="chart-container">
+        <div className="activity-chart-container">
             <ActivityChart activities={activities} />
         </div>
     );

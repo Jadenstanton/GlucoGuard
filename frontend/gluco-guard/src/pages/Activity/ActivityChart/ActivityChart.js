@@ -7,13 +7,6 @@ import "./ActivityChart.css";
 const ActivityChart = ({ activities }) => {
     const [chartData, setChartData] = useState({ labels: [], datasets: [] });
 
-    const generateRandomColor = () => {
-        const r = Math.floor(Math.random() * 255);
-        const g = Math.floor(Math.random() * 255);
-        const b = Math.floor(Math.random() * 255);
-        return `rgb(${r}, ${g}, ${b})`;
-    };
-
     useEffect(() => {
         if (Array.isArray(activities) && activities.every(activity => activity.created_at)) {
             const updatedChartData = {
@@ -34,7 +27,7 @@ const ActivityChart = ({ activities }) => {
                             y: activity.duration
                         })),
                         fill: false,
-                        borderColor: 'rgb(75, 192, 192)',
+                        borderColor: '#F97068',
                         tension: 0.1,
                         pointRadius: 5,
                         pointBorderWidth: 2
@@ -50,6 +43,7 @@ const ActivityChart = ({ activities }) => {
 
     const chartOptions = {
         responsive: true,
+        devicePixelRatio: 2,
         scales: {
             x: {
                 title: {
@@ -79,7 +73,7 @@ const ActivityChart = ({ activities }) => {
     // console.log(chartData)
 
     return (
-        <div className="chart">
+        <div className="activity-chart">
             <Line data={chartData} options={chartOptions} />
         </div>
     );

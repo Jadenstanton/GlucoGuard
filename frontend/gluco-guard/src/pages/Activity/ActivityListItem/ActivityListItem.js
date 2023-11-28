@@ -7,8 +7,6 @@ const ActivityListItem = ({ activity, onEdit, onDelete }) => {
     const toggleDetailsVisibility = () => {
         setIsDetailsVisible(!isDetailsVisible);
     };
-    // console.log('Activity ID in ListItem:', activity.id);
-
 
     return (
         <div className="activity-list-item">
@@ -19,7 +17,6 @@ const ActivityListItem = ({ activity, onEdit, onDelete }) => {
                         <p>Duration: {activity.duration} minutes</p>
                         <p>Heart Rate: {activity.heart_rate} bpm</p>
                         <p>Breathing Rate: {activity.breathing_rate} bpm</p>
-                        {/* Add more activity details as needed */}
                     </div>
                 )}
             </div>
