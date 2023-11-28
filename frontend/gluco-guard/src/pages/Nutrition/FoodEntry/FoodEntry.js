@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './FoodEntry.css'; 
+import './FoodEntry.css';
 
 const FoodEntry = ({ onFoodSubmit, onRecipeSubmit }) => {
   const [foodInput, setFoodInput] = useState('');
@@ -30,11 +30,13 @@ const FoodEntry = ({ onFoodSubmit, onRecipeSubmit }) => {
           value={foodInput}
           onChange={(e) => setFoodInput(e.target.value)}
         />
-        <button type="submit" className="submit-button">Add Food</button>
-        {/* Additional button for submitting a recipe */}
-        <button type="button" className="submit-button submit-recipe-button" onClick={handleRecipeSubmit}>
-          Add Recipe
-        </button>
+        <div className='buttons-container'>
+          <button type="submit" className="submit-button">Add Food</button>
+          <button type="button" className="submit-button submit-recipe-button" onClick={handleRecipeSubmit}>
+            Add Recipe
+          </button>
+        </div>
+
       </form>
     </div>
   );

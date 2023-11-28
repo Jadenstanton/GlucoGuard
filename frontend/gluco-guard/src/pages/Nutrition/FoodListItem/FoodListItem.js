@@ -7,8 +7,6 @@ const FoodListItem = ({ food, onEdit, onDelete }) => {
   const toggleSummaryVisibility = () => {
     setIsSummaryVisible(!isSummaryVisible);
   };
-  
-//   console.log('foods:', food)
 
   return (
     <div className="food-list-item">
@@ -16,13 +14,11 @@ const FoodListItem = ({ food, onEdit, onDelete }) => {
         <h3 className="food-name">{food.food_name}</h3>
         {isSummaryVisible && (
           <div className="food-summary">
-            <p>Calories: {food.calories}</p>
-            <p>Protein: {food.protein_g}g</p>
-            <p>Fat: {food.total_fat_g}g</p>
-            <p>Carbs: {food.total_carbohydrate_g}g</p>
-            {/* <p>Carbs: {food.total_carbohydrate_g}g</p> */}
-            {/*TODO*/}
-            {/* Add more nutritional details as needed */}
+            <p>Calories: {food.calories.toFixed(2)}</p>
+            <p>Protein: {food.protein_g.toFixed(2)}g</p>
+            <p>Fat: {food.total_fat_g.toFixed(2)}g</p>
+            <p>Carbs: {food.total_carbohydrate_g.toFixed(2)}g</p>
+            {/* Additional nutritional details can be added here */}
           </div>
         )}
       </div>

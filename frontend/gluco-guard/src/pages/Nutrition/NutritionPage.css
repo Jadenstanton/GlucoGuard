@@ -1,9 +1,19 @@
+:root {
+  --raisin-black: #212738ff;
+  --bittersweet: #f97068ff;
+  --pear: #d1d646ff;
+  --antiflash-white: #edf2efff;
+  --vivid-sky-blue: #57c4e5ff;
+  --non-photo-blue: #a7e0f1ff;
+  --honeydew: #cfded5ff;
+}
+
 .nutrition-page {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 20px;
-  background-color: #e6ebed;
+  background-color: var(--honeydew);
   overflow-y: auto;
   min-height: 100%;
 }
@@ -35,7 +45,7 @@
   align-items: center;
   padding: 10px;
   margin-bottom: 10px;
-  background-color: #f9f9f9;
+  background-color: #e7ecee;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -47,18 +57,13 @@
   }
 }
 
-.nutrition-chart {
-  width: 100%;
-  max-width: 600px;
-}
-
 .nutrition-layout {
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-evenly;
-  gap: 20px;
+  align-items: stretch;
+  justify-content: flex-start;
+  min-width: 90%;
   padding: 20px;
+  margin: 30px auto;
 }
 
 /* Responsive design for smaller screens */

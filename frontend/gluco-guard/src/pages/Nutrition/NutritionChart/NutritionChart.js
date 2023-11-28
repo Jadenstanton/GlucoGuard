@@ -1,13 +1,12 @@
 import React from "react";
 import { Doughnut } from "react-chartjs-2";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowsSpin } from '@fortawesome/free-solid-svg-icons';
 import "./NutritionChart.css";
-import { sum } from "lodash";
 
 const NutritionChart = ({ data, showMacroChart }) => {
-  // console.log("Chart data:", data);
-  if (!data || !Array.isArray(data)) {
-    console.error("data is undefined or not an array:", data);
-    return <div>Loading...</div>;
+  if (!Array.isArray(data)) {
+    return <FontAwesomeIcon icon={faArrowsSpin} spin />;
   }
 
   const summary = data.reduce(
@@ -26,8 +25,8 @@ const NutritionChart = ({ data, showMacroChart }) => {
     datasets: [
       {
         data: [summary.protein, summary.fat, summary.carbs],
-        backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
-        hoverBackgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
+        backgroundColor: ["#212738", "#57C4E5", "#F97068"],
+        hoverBackgroundColor: ["#212738", "#57C4E5", "#F97068"],
       },
     ],
   };
@@ -36,25 +35,18 @@ const NutritionChart = ({ data, showMacroChart }) => {
     maintainAspectRatio: false,
     responsive: true,
   };
+
   const maxCalories = 3000;
 
   const calorieChartData = {
     labels: ["Consumed", "Remaining"],
     datasets: [
       {
-        data: [summary.calories, maxCalories - summary.calories], // Consumed calories and remaining to fill the donut
-        backgroundColor: [
-          "#FFCE56", // Color for consumed calories
-          "transparent", // Make the remaining part transparent
-        ],
-        borderColor: [
-          "#FFCE56", // Border color should match the consumed segment
-          "transparent", // Transparent border for the remaining segment
-        ],
-        hoverBackgroundColor: [
-          "#FFCE56", // Hover color for consumed calories
-        ],
-        borderWidth: 1, // Set border width to show the chart properly
+        data: [summary.calories, maxCalories - summary.calories],
+        backgroundColor: ["#D1D646", "transparent"],
+        borderColor: ["#D1D646", "transparent"],
+        hoverBackgroundColor: ["#D1D646"],
+        borderWidth: 1,
       },
     ],
   };
@@ -62,25 +54,15 @@ const NutritionChart = ({ data, showMacroChart }) => {
   const calorieChartOptions = {
     maintainAspectRatio: false,
     responsive: true,
-    cutoutPercentage: 80, // Adjust the cutout percentage to make the donut thicker or thinner
-    elements: {
-      arc: {
-        borderWidth: 1, // Hide the border of the transparent arc
-      },
-    },
+    cutoutPercentage: 80,
+    elements: { arc: { borderWidth: 1 } },
     tooltips: {
       callbacks: {
         label: function (tooltipItem, data) {
-          // Only show tooltip for the consumed calories segment
           if (tooltipItem.index === 0) {
-            return (
-              data.labels[tooltipItem.index] +
-              ": " +
-              data.datasets[0].data[tooltipItem.index] +
-              " kcal"
-            );
+            return `${data.labels[tooltipItem.index]}: ${data.datasets[0].data[tooltipItem.index]} kcal`;
           }
-          return null; // Hide tooltip for the transparent segment
+          return null;
         },
       },
     },
@@ -89,11 +71,11 @@ const NutritionChart = ({ data, showMacroChart }) => {
   return (
     <div className="charts-flex-container">
       {showMacroChart && (
-        <div className="chart">
+        <div className="nutrition-chart">
           <Doughnut data={chartData} options={chartOptions} />
         </div>
       )}
-      <div className="chart">
+      <div className="nutrition-chart">
         <Doughnut data={calorieChartData} options={calorieChartOptions} />
       </div>
     </div>
@@ -101,7 +83,7 @@ const NutritionChart = ({ data, showMacroChart }) => {
 };
 
 NutritionChart.defaultProps = {
-  showMacroChart: true
+  showMacroChart: true,
 };
 
 export default NutritionChart;

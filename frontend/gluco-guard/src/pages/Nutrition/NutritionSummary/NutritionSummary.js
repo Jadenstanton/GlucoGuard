@@ -1,16 +1,14 @@
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowsSpin } from '@fortawesome/free-solid-svg-icons';
 import './NutritionSummary.css';
 
 const NutritionSummary = ({ foodItems }) => {
-    console.log('Received foodItems prop:', foodItems);
+  if (!Array.isArray(foodItems)) {
+    return <FontAwesomeIcon icon={faArrowsSpin} spin />; // Handles undefined or non-array 'foodItems'
+  }
 
-    // Ensure that foodItems is defined and is an array before attempting to calculate summary
-    if (!foodItems || !Array.isArray(foodItems)) {
-      console.error('foodItems is undefined or not an array:', foodItems);
-      return <div>Loading...</div>; 
-    }
-  
- const summary = foodItems.reduce((acc, food) => {
+  const summary = foodItems.reduce((acc, food) => {
     acc.calories += food.calories;
     acc.protein += food.protein_g;
     acc.fat += food.total_fat_g;
@@ -18,7 +16,6 @@ const NutritionSummary = ({ foodItems }) => {
     return acc;
   }, { calories: 0, protein: 0, fat: 0, carbs: 0 });
 
-  // Render the summary
   return (
     <div className="nutrition-summary">
       <h2>Nutrition Summary</h2>
@@ -29,9 +26,9 @@ const NutritionSummary = ({ foodItems }) => {
     </div>
   );
 };
-  
-NutritionSummary.defaultProps= {
-    foodItems: []
+
+NutritionSummary.defaultProps = {
+  foodItems: []
 };
-  export default NutritionSummary;
-  
+
+export default NutritionSummary;

@@ -1,33 +1,28 @@
-.chart-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  /* width: 900px; */
-  height: 100%;
-  padding: 20px;
+:root {
+  --raisin-black: #212738ff;
+  --bittersweet: #f97068ff;
+  --pear: #d1d646ff;
+  --antiflash-white: #edf2efff;
+  --vivid-sky-blue: #57c4e5ff;
+  --non-photo-blue: #a7e0f1ff;
+  --honeydew: #cfded5ff;
 }
 
 .charts-flex-container {
-  width: 100%;
-  height: 200px;
   display: flex;
   flex-direction: row;
-  gap: 20px;
-}
-
-.chart {
-  flex-basis: 50%;
-  width: 300px;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
   height: 100%;
+  background-color: var(--antiflash-white);
+  border-radius: 10px;
 }
 
-@media (max-width: 768px) {
-  .charts-flex-container {
-    flex-direction: column;
-  }
-
-  .chart {
-    flex-basis: auto;
-    max-width: 100%;
-  }
+.nutrition-chart {
+  flex: 1;
+  flex-basis: calc(50% - 20px);
+  margin: 10px;
+  max-width: calc(50% - 20px);
+  box-sizing: border-box;
 }
