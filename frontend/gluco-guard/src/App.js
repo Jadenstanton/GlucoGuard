@@ -15,7 +15,6 @@ import ProfilePage from './pages/Profile/ProfilePage';
 import Dashboard from './pages/Dashboard/Dashboard';
 import SettingsPage from './pages/Settings/SettingsPage';
 import NutritionPage from './pages/Nutrition/NutritionPage';
-import LoggingPage from './pages/Logging/LoggingPage';
 import ActivityPage from './pages/Activity/ActivityPage';
 import ContactPage from './pages/Contact/ContactPage';
 
@@ -35,7 +34,6 @@ function App() {
               <Route path="/my-profile" element={<ProfilePage />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path='/nutrition' element={<NutritionPage />} />
-              <Route path='/logging' element={<LoggingPage />} />
               <Route path='/activity' element={<ActivityPage />} />
               <Route path='/contact' element={<ContactPage />} />
             </Route>
