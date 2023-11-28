@@ -1,10 +1,11 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './Tile.css';
 
-const Tile = ({ data, size, children }) => {
+const Tile = ({ data, area, children }) => {
   const navigate = useNavigate();
-  const tileClass = `tile ${size}`;
+  const tileClass = `tile ${area}`;
 
   const handleClick = () => {
     navigate(data.link);
@@ -12,7 +13,7 @@ const Tile = ({ data, size, children }) => {
 
   return (
     <div className={tileClass} onClick={handleClick}>
-      {data.icon && <img src={data.icon} alt={data.title} />}
+      {data.icon && <FontAwesomeIcon icon={data.icon} size="2x" alt={data.title} />}
       <h3>{data.title}</h3>
       {data.summary && <p>{data.summary}</p>}
       {children}

@@ -1,40 +1,63 @@
+* {
+  --raisin-black: #212738ff;
+  --bittersweet: #f97068ff;
+  --pear: #d1d646ff;
+  --antiflash-white: #edf2efff;
+  --vivid-sky-blue: #57c4e5ff;
+  --non-photo-blue: #a7e0f1ff;
+}
 .tile {
-  border: 1px solid black;
-  border-radius: 8px;
-  padding: 15px;
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  padding: 20px;
   margin: 10px;
   cursor: pointer;
-  overflow: auto;
+  overflow: hidden;
   background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.tile.size-1x1 {
-  grid-column: span 1;
-  grid-row: span 1;
+/* Grid area specific styles */
+/* Assign the proper grid area names based on the grid-template-areas layout */
+.sm {
+  grid-area: sm; /* Matches "sm" in grid-template-areas */
+  background-color: var(--vivid-sky-blue);
 }
 
-.tile.size-2x1 {
-  grid-column: span 2;
-  grid-row: span 1;
+.sm2 {
+  grid-area: sm2; /* Matches "sm2" in grid-template-areas */
+  background-color: var(--bittersweet);
 }
 
-.tile.size-1x2 {
-  grid-column: span 1;
-  grid-row: span 2;
+.sm3 {
+  grid-area: sm3; /* Matches "sm3" in grid-template-areas */
+  background-color: var(--pear);
 }
 
-.tile.size-2x2 {
-  grid-column: span 2;
-  grid-row: span 2;
+.sm4 {
+  grid-area: sm4; /* Matches "sm4" in grid-template-areas */
+  background-color: var(--antiflash-white);
 }
 
-/* .tile.size-2x3 {
-    grid-column: span 2;
-    grid-row: span 3;
-  }
+.large {
+  grid-area: large; /* Matches "large" in grid-template-areas */
+}
 
-  .tile.size-3x2 {
-    grid-column: span 3;
-    grid-row: span 2;
-  } */
+.med {
+  grid-area: med; /* Matches "med" in grid-template-areas */
+}
+
+.med2 {
+  grid-area: med2; /* Matches "med2" in grid-template-areas */
+}
+
+.large2 {
+  grid-area: large2; /* Matches "large2" in grid-template-areas */
+}
+
+.large3 {
+  grid-area: large3; /* Matches "large3" in grid-template-areas */
+}
