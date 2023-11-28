@@ -3,13 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 
 const LogoutButton = () => {
-    const { toggleAuth } = useContext(AuthContext);
+  const { toggleAuth } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.removeItem('token'); // Clear the token from storage
+    localStorage.removeItem('token');
     toggleAuth(false);
-    navigate('/auth'); // Redirect to the home page after logout
+    navigate('/auth');
   };
 
   return (

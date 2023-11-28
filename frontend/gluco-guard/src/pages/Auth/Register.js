@@ -1,9 +1,9 @@
 import React, { useState, useContext } from 'react';
-import './Register.css';
-import { registerUser } from '../../services/authService';
-import { AuthContext } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { debounce } from 'lodash';
+import { registerUser } from '../../services/authService';
+import { AuthContext } from '../../context/AuthContext';
+import './Register.css';
 
 const Register = ({ isSignInActive, onSwitch }) => {
   const navigate = useNavigate();
@@ -18,6 +18,7 @@ const Register = ({ isSignInActive, onSwitch }) => {
   const [isEmailAvailable, setIsEmailAvailable] = useState(true);
   const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
+  // Function to check username availability
   const checkUsernameAvailability = debounce(async (username) => {
     if (username) {
       try {
@@ -37,6 +38,7 @@ const Register = ({ isSignInActive, onSwitch }) => {
     }
   }, 300);
 
+  // Function to check email availability
   const checkEmailAvailability = debounce(async (email) => {
     if (email) {
       try {
@@ -56,7 +58,7 @@ const Register = ({ isSignInActive, onSwitch }) => {
     }
   }, 300);
 
-
+  // Function to handle form field changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -87,11 +89,12 @@ const Register = ({ isSignInActive, onSwitch }) => {
     try {
       const response = await registerUser(formData);
       if (response.message === 'User registered successfully') {
-        console.log('Registration Successful');
+        console.log('Registration Successful', response);
         localStorage.setItem('token', response.token);
-        localStorage.setItem('userId', response.userId)
+        localStorage.setItem('userId', response.userId);
+        localStorage.setItem('username', response.username);
         toggleAuth(true);
-        navigate('/my-profile', { state: { isNewUser: true } });
+        navigate('/my-profile', { state: { isNewUser: true, username: response.username } });
       } else {
         console.log('Registration Failed', response.message);
         // Show error messages to the user, based on the response.message
@@ -106,9 +109,11 @@ const Register = ({ isSignInActive, onSwitch }) => {
     }
   };
 
+  // Conditional rendering based on isSignInActive
   return (
     <div className={isSignInActive ? "register-container collapsed" : "register-container expanded"}>
       {isSignInActive ? (
+        // Sign In view
         <>
           <h2 className='register-title'>Hello there!</h2>
           <p>Enter your personal details <br />
@@ -117,9 +122,10 @@ const Register = ({ isSignInActive, onSwitch }) => {
           <button className="register-button" onClick={onSwitch}>Sign Up</button>
         </>
       ) : (
+        // Sign Up form view
         <>
           <h1>Sign Up for GlucoGuard</h1>
-          <form onSubmit={handleRegister}> {/* Updated to use the new function */}
+          <form onSubmit={handleRegister}>
             <input className='register-input' type="text" placeholder="Username" name="username" value={formData.username} onChange={handleChange} />
             {!isUsernameAvailable && <div className='username-taken'>Username is taken</div>}
             <input className='register-input' type="email" placeholder="Email" name="email" value={formData.email} onChange={handleChange} />
