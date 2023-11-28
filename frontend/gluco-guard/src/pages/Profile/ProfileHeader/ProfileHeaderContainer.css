@@ -1,15 +1,23 @@
+:root {
+  --raisin-black: #212738ff;
+  --bittersweet: #f97068ff;
+  --pear: #d1d646ff;
+  --antiflash-white: #edf2efff;
+  --vivid-sky-blue: #57c4e5ff;
+  --non-photo-blue: #a7e0f1ff;
+  --honeydew: #cfded5ff;
+}
 .user-profile {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    background: #f4f4f4;
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background: var(--antiflash-white);
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .user-profile {
+    padding: 10px;
   }
-  
-  @media (max-width: 768px) {
-    .user-profile {
-      padding: 10px;
-    }
-  }
-  
+}

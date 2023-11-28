@@ -1,27 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { useBaseMetrics } from '../../../context/BaseMetricsContext';
-import BaseMetricsModal from './BaseMetricsModal'; // Import the modal component
-import './BaseMetricsModalContainer.css'
+import BaseMetricsModal from './BaseMetricsModal';
+import './BaseMetricsModalContainer.css';
 
 const BaseMetricsModalContainer = ({ isNewUser }) => {
     const [showModal, setShowModal] = useState(false);
     const { baseMetrics, handleBaseMetricsChange } = useBaseMetrics();
 
     useEffect(() => {
-        if (isNewUser) {
-            setShowModal(true);
-        }
+        setShowModal(isNewUser);
     }, [isNewUser]);
 
     const handleModalClose = () => {
         setShowModal(false);
-        isNewUser = false
     };
 
     const handleModalSubmit = (metrics) => {
         // Handle the submission of metrics here
         // For example, send them to the backend
-        console.log(metrics); // Replace with actual submission logic
+        // console.log(metrics); // Uncomment for debugging
 
         setShowModal(false);
     };

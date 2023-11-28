@@ -1,12 +1,12 @@
 import React from 'react';
 import ProfileHeader from './ProfileHeader';
-import './ProfileHeaderContainer.css'; 
+import './ProfileHeaderContainer.css';
 
-const ProfileHeaderContainer = () => {
+const ProfileHeaderContainer = ({ username, profileImage }) => {
   return (
     <div className="user-profile">
-      <ProfileHeader />
-      {/* Other subcomponents for profile sections */}
+      <ProfileHeader username={username} profileImage={profileImage} />
+      {/* Additional profile subcomponents can be added here if necessary */}
     </div>
   );
 };

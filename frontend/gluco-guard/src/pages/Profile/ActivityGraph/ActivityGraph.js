@@ -1,10 +1,12 @@
 import React from 'react';
 import { Bar } from 'react-chartjs-2';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowsSpin } from '@fortawesome/free-solid-svg-icons';
 import 'chart.js/auto';
 
 const ActivityGraph = ({ combinedActivity }) => {
   if (!combinedActivity) {
-    return <div>Loading...</div>;
+    return <FontAwesomeIcon icon={faArrowsSpin} spin />;
   }
 
   const labels = combinedActivity.map(item => item.date);
@@ -17,14 +19,14 @@ const ActivityGraph = ({ combinedActivity }) => {
       {
         label: 'Food Submissions',
         data: foodCounts,
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
-        borderColor: 'rgba(255, 99, 132, 1)',
+        backgroundColor: '#D1D646',
+        borderColor: '#D1D646',
       },
       {
         label: 'Activity Submissions',
         data: activityCounts,
-        backgroundColor: 'rgba(54, 162, 235, 0.5)',
-        borderColor: 'rgba(54, 162, 235, 1)',
+        backgroundColor: '#212738',
+        borderColor: '#212738',
       },
     ],
   };

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useBaseMetrics } from '../../../context/BaseMetricsContext';
 import './AccountSettings.css'
 

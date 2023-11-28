@@ -1,5 +1,15 @@
+:root {
+  --raisin-black: #212738ff;
+  --bittersweet: #f97068ff;
+  --pear: #d1d646ff;
+  --antiflash-white: #edf2efff;
+  --vivid-sky-blue: #57c4e5ff;
+  --non-photo-blue: #a7e0f1ff;
+  --honeydew: #cfded5ff;
+}
+
 .profile-background {
-  background-color: lightgray;
+  background-color: var(--honeydew);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -23,6 +33,6 @@
 
 @media (max-width: 768px) {
   .main-content {
-    grid-template-columns: 1fr; /* Stack the sections on smaller screens */
+    grid-template-columns: 1fr; /* Adjust for smaller screens */
   }
 }

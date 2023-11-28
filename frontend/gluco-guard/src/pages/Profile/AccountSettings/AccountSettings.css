@@ -1,9 +1,19 @@
+:root {
+  --raisin-black: #212738ff;
+  --bittersweet: #f97068ff;
+  --pear: #d1d646ff;
+  --antiflash-white: #edf2efff;
+  --vivid-sky-blue: #57c4e5ff;
+  --non-photo-blue: #a7e0f1ff;
+  --honeydew: #cfded5ff;
+}
+
 .account-preferences {
   width: 100%;
-  max-width: 400px;
+  min-width: 400px;
   margin: auto;
   padding: 20px;
-  background: #ffffff;
+  background: var(--bittersweet);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   overflow: hidden;

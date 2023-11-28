@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
+import { useBaseMetrics } from '../../../context/BaseMetricsContext';
 import './BaseMetricsModal.css';
 
-const BaseMetricsModal = ({ isOpen, onClose, onSubmit }) => {
+const BaseMetricsModal = ({ isOpen, onClose }) => {
     const [metrics, setMetrics] = useState({
         name: '',
         age: '',
         weight: '',
         height: '',
     });
+
+    const { handleBaseMetricsChange } = useBaseMetrics();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -16,8 +19,7 @@ const BaseMetricsModal = ({ isOpen, onClose, onSubmit }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        onSubmit(metrics);
-        localStorage.setItem('baseMetrics', JSON.stringify(metrics));
+        handleBaseMetricsChange(metrics); // Use context function for updating metrics
         onClose();
     };
 
@@ -31,8 +33,8 @@ const BaseMetricsModal = ({ isOpen, onClose, onSubmit }) => {
                 <form onSubmit={handleSubmit}>
                     <input type="text" name="name" placeholder="Name" value={metrics.name} onChange={handleChange} />
                     <input type="number" name="age" placeholder="Age" value={metrics.age} onChange={handleChange} />
-                    <input type="number" name="weight" placeholder="Weight" value={metrics.weight} onChange={handleChange} />
-                    <input type="number" name="height" placeholder="Height" value={metrics.height} onChange={handleChange} />
+                    <input type="number" name="weight" placeholder="Weight (in kg)" value={metrics.weight} onChange={handleChange} />
+                    <input type="number" name="height" placeholder="Height (in cm)" value={metrics.height} onChange={handleChange} />
                     <button type="submit">Submit</button>
                 </form>
             </div>

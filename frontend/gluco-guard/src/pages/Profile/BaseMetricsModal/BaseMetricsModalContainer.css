@@ -1,10 +1,7 @@
 .modal-container {
-  /* Add styles here if to position or layout the container 
-       in ProfilePage. If the container is just a logical wrapper 
-       without specific visual requirements, might not need much here. */
+  /* Minimal styles or leave empty if it's just a logical wrapper */
 }
 
-/* Example styles if you want to add some visual cues or layout */
 .modal-container {
   display: flex;
   justify-content: center;

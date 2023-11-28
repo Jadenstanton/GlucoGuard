@@ -1,11 +1,8 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Doughnut } from 'react-chartjs-2';
 import 'chart.js/auto';
-import { ActivityContext } from '../../../context/ActivityContext';
 
 const HealthMetrics = ({ activityEvaluation }) => {
-    // const { activityEvaluation } = useContext(ActivityContext);
-    // console.log("IHBIHB", activityEvaluation.activeZone);
     const getColor = (riskLevel) => {
         switch (riskLevel) {
             case 'low':
@@ -25,12 +22,11 @@ const HealthMetrics = ({ activityEvaluation }) => {
         datasets: [
             {
                 label: 'Health Risk',
-                data: [33, 33, 34], // Splitting 100% into three parts
+                data: [33, 33, 34],
                 backgroundColor: [
                     getColor(activityEvaluation.activeZone.level),
                     getColor(activityEvaluation.breathingRate.level),
                     getColor(activityEvaluation.heartRate.level),
-                    // console.log('acti', activityEvaluation)
                 ],
                 borderColor: [
                     getColor(activityEvaluation.activeZone.level).replace('0.2', '1'),
@@ -46,15 +42,20 @@ const HealthMetrics = ({ activityEvaluation }) => {
     const options = {
         maintainAspectRatio: false,
         responsive: true,
-        cutout: '70%',
+        cutout: '60%',
         plugins: {
             legend: {
                 display: true,
                 position: 'top',
+                labels: {
+                    boxWidth: 10,
+                    padding: 10,
+                    font: { size: 12 },
+                },
             },
             title: {
                 display: true,
-                text: 'Diabetes Risk Evaluation',
+                text: 'Health Risk Evaluation',
             },
             tooltip: {
                 callbacks: {
@@ -83,9 +84,9 @@ const HealthMetrics = ({ activityEvaluation }) => {
     };
 
     return (
-        <div className="health-summary" style={{ width: '300px', height: '300px' }} >
+        <div className="health-summary" style={{ width: '300px', height: '300px' }}>
             <Doughnut data={data} options={options} />
-        </div >
+        </div>
     );
 };
 
