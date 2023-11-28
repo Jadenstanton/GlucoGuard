@@ -1,27 +1,61 @@
+/* Global Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Color Variables */
+:root {
+  --raisin-black: #212738ff;
+  --bittersweet: #f97068ff;
+  --pear: #d1d646ff;
+  --antiflash-white: #edf2efff;
+  --vivid-sky-blue: #57c4e5ff;
+  --non-photo-blue: #a7e0f1ff;
+  --honeydew: #cfded5ff;
+}
+
+/* App Container */
 .App {
   text-align: center;
   font-family: "Arial", sans-serif;
-  background-color: #f4f4f4;
+  background-color: var(--honeydew);
   height: 100vh;
   overflow: auto;
 }
+
+/* Logo Styles */
 .App-logo {
   height: 40vmin;
   pointer-events: none;
 }
-.page-content {
-  height: 100vh;
+
+/* Private Content Styling */
+.private-content {
+  flex-grow: 1;
+  width: 0;
   padding-top: 70px;
-  padding-bottom: 70px;
-  min-height: calc(100vh - 50px);
 }
 
+/* Main Page Content */
+.page-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  min-height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* Logo Animation for Users Preferring Reduced Motion */
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
 }
 
+/* Header Styling */
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -33,10 +67,12 @@
   color: white;
 }
 
+/* Link Styling */
 .App-link {
   color: #61dafb;
 }
 
+/* Keyframe Animation for Logo Spin */
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
