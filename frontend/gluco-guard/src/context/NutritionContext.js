@@ -12,29 +12,26 @@ export const NutritionProvider = ({ children }) => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        setIsLoading(true);
-        const user_id = localStorage.getItem('userId');
-
-        getAllFoods(user_id)
-            .then(response => {
+        const fetchAllFoods = async () => {
+            setIsLoading(true);
+            const user_id = localStorage.getItem('userId');
+            try {
+                const response = await getAllFoods(user_id);
                 if (response && response.data && Array.isArray(response.data)) {
                     setFoods({ data: response.data });
-                    const lastItem = response.data[response.data.length - 1];
-                    // console.log('last item:', lastItem);
-                    setLastFoodItem(lastItem);
+                    setLastFoodItem(response.data[response.data.length - 1]);
                 } else {
                     setError('The response from getAllFoods is not structured as expected.');
                 }
-            })
-            .catch(err => {
+            } catch (err) {
                 setError(err.message);
-            })
-            .finally(() => {
+            } finally {
                 setIsLoading(false);
-            });
+            }
+        };
+
+        fetchAllFoods();
     }, []); // Empty dependency array ensures this runs once on mount.
-
-
 
     const contextValue = {
         lastFoodItem,
