@@ -7,7 +7,6 @@ const Overlay = () => {
       <div className="overlay-content">
         <h1>Welcome Back!</h1>
         <p>To keep connected with us please login with your personal info</p>
-        {/* Any other content or buttons to switch between Sign In and Sign Up */}
       </div>
     </div>
   );

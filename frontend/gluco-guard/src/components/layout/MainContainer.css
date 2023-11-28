@@ -1,17 +1,16 @@
 .main-container {
-    position: relative;
-    display: flex;
-    width: 100vw;
-    height: 100vh;
-    justify-content: center;
-    align-items: center;
-    background: linear-gradient(to right, #f8f8f8, #e0e0e0);
-    overflow: hidden; /* This ensures that the sliding components won't go outside the container */
-  }
-  
-  .auth-background {
-    /* background-image: url('.../assets/images/auth-background.jpg'); */
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
+  position: relative;
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to right, #f3f5f6, #f3f5f6);
+  overflow: hidden;
+}
+
+.auth-background {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 }
