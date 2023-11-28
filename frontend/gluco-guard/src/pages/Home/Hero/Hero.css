@@ -1,0 +1,47 @@
+:root {
+  --raisin-black: #212738ff;
+  --bittersweet: #f97068ff;
+  --pear: #d1d646ff;
+  --antiflash-white: #edf2efff;
+  --vivid-sky-blue: #57c4e5ff;
+  --non-photo-blue: #a7e0f1ff;
+  --honeydew: #cfded5ff;
+}
+.hero {
+  background-size: cover;
+  color: var(--raisin-black);
+  text-align: center;
+  padding: 100px 20px;
+  background-color: var(--vivid-sky-blue);
+  width: 100%;
+}
+
+.hero-content h1 {
+  font-size: 2.5em;
+  margin-bottom: 0.5em;
+}
+
+.hero-content p {
+  font-size: 1.2em;
+  margin-bottom: 1.5em;
+}
+
+.hero-cta {
+  background-color: var(--non-photo-blue);
+  border: none;
+  padding: 15px 30px;
+  color: white;
+  font-size: 1em;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  width: 600px;
+}
+
+.hero-cta button {
+  width: 100px;
+}
+
+.hero-cta:hover {
+  background-color: #1992d4;
+}

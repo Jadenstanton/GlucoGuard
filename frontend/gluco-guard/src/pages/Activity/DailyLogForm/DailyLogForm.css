@@ -1,0 +1,93 @@
+.daily-log-section {
+  padding: 20px;
+  text-align: center;
+}
+
+.daily-log-form {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  width: 100%;
+  border-radius: 10px;
+}
+
+.daily-log-form label {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.daily-log-form input[type="text"],
+.daily-log-form input[type="number"],
+.daily-log-form select,
+.daily-log-form textarea {
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  max-width: fit-content;
+}
+
+.daily-log-form input[type="text"]:focus,
+.daily-log-form input[type="number"]:focus,
+.daily-log-form select:focus,
+.daily-log-form textarea:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+.daily-log-form button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.daily-log-form button:hover {
+  background-color: #0056b3;
+}
+
+.daily-log-form button {
+  margin-bottom: 20px;
+  width: 20%;
+}
+
+.duration-inputs {
+  display: flex;
+  justify-content: center;
+}
+
+.duration-inputs .form-group {
+  margin-right: 20px;
+}
+
+.intensity-slider {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.intensity-slider input[type="range"] {
+  width: 100%;
+}
+
+.intensity-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 5px;
+}
+
+.intensity-labels span {
+  flex: 1;
+  text-align: center;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .intensity-slider input[type="range"] {
+    width: 100%;
+  }
+}

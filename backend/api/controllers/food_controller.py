@@ -1,4 +1,5 @@
 from ..models.food import Food
+from flask import request
 import logging
 import json
 
@@ -69,28 +70,40 @@ class FoodController:
             self.db.session.commit()
             return {
                 "message": "Food entry created successfully",
-                "data": new_food_entry.id,
+                "data": new_food_entry.to_dict(),
             }, 201
         except Exception as e:
             self.db.session.rollback()
             return {"message": f"Failed to create food entry. Error:{e}"}, 500
 
-    def delete_food(self, user_id, food_id):
+    def delete_food(self, food_id):
         if not food_id:
             return {"message": "Food ID is required in the request parameters"}, 400
 
+        user_id = request.headers.get("Authorization")
+        if not user_id:
+            return {"message": "User ID is required"}, 401
+
         food = Food.query.get(food_id)
+        # print("foodid", food.user_id)
+        # print("uid", user_id)
 
         if not food:
             return {"message": "Food entry not found"}, 404
 
-        if food.user_id != user_id:
+        # print(f"Comparing food.user_id: {food.user_id} with user_id: {user_id}")
+        # print(
+        #     f"Type of food.user_id: {type(food.user_id)}, Type of user_id: {type(user_id)}"
+        # )
+
+        if food.user_id != int(user_id):
+            # print("Permission denied triggered")
             return {"message": "Permission denied"}, 403
 
         try:
             self.db.session.delete(food)
             self.db.session.commit()
-            return {"message": "Food entry deleted successfully"}
+            return {"message": "Food entry deleted successfully"}, 200
         except Exception as e:
             self.db.session.rollback()
             return {"message": "Failed to delete food entry"}, 500
@@ -140,4 +153,21 @@ class FoodController:
             "message": "Food entry retrieved successfully",
             "data": food.to_dict(),
         }
+        return response, 200
+
+    def get_all_foods(self, user_id):
+        # Retrieve all food entries
+        all_foods = Food.query.filter_by(user_id=user_id).all()
+
+        # Check if any food entries exist for the user
+        if not all_foods:
+            return {"message": "No food entries found for the user"}, 404
+
+        # Prepare response data
+        food_list = [food.to_dict() for food in all_foods]
+        response = {
+            "message": "All food entries retrieved successfully",
+            "data": food_list,
+        }
+
         return response, 200

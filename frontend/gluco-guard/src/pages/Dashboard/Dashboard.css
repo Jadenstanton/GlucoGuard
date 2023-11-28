@@ -1,0 +1,30 @@
+:root {
+  --raisin-black: #212738ff;
+  --bittersweet: #f97068ff;
+  --pear: #d1d646ff;
+  --antiflash-white: #edf2efff;
+  --vivid-sky-blue: #57c4e5ff;
+  --non-photo-blue: #a7e0f1ff;
+  --honeydew: #cfded5ff;
+}
+
+.dashboard {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 0.5fr 1.2fr 1.3fr;
+  gap: 10px;
+  padding: 20px;
+  background-color: var(--honeydew);
+  min-height: 100%;
+  grid-template-areas:
+    "sm sm2 sm3 sm4"
+    "large large med med2"
+    "large2 large2 large3 large3";
+}
+
+/* Adjust the media query for smaller screens if needed */
+@media (max-width: 768px) {
+  .dashboard {
+    grid-template-columns: 1fr; /* Stack tiles on smaller screens */
+  }
+}

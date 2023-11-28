@@ -64,12 +64,18 @@ class UserController:
             username=data["username"], email=data["email"], password=hashed_password
         )
         print("Plaintext Password:", data["password"])
-        print("Hashed Password:", hashed_password)
+        # print("Hashed Password:", hashed_password)
 
         try:
             self.db.session.add(new_user)
             self.db.session.commit()
-            return {"message": "Registration successful"}, 201
+            jwt_token = self.generate_jwt_token(new_user.id)
+            return {
+                "message": "User registered successfully",
+                "token": jwt_token,
+                "userId": new_user.id,
+                "username": new_user.username,
+            }, 201
         except Exception as e:
             self.db.session.rollback()
             return {"message": "Failed to register user. Error" + str(e)}, 500
@@ -87,10 +93,22 @@ class UserController:
 
         if check_password_hash(user.password, data["password"]):
             jwt_token = self.generate_jwt_token(user.id)
-            return {"message": "Login successful", "token": jwt_token}
+            return {
+                "message": "Login successful",
+                "token": jwt_token,
+                "userId": user.id,
+            }
         else:
             logging.debug(f"Stored Hashed Password: {user.password}")
             logging.debug(f"Provided Password: {data['password']}")
             logging.debug(f"Provided email: {user.email}")
 
             return {"message": "Invalid email or password"}, 401
+
+    def check_username_availability(self, username):
+        user = UserProfile.query.filter_by(username=username).first()
+        return user is None
+
+    def check_email_availability(self, email):
+        email = UserProfile.query.filter_by(email=email).first()
+        return email is None

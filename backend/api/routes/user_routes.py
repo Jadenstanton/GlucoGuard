@@ -31,3 +31,19 @@ def login():
         return jsonify(result)
 
     # logging.info("Login result: %s", result)
+
+
+@user_bp.route("/check-username", methods=["POST"])
+def check_username():
+    data = request.get_json()
+    username = data.get("username")
+    is_available = user_controller.check_username_availability(username)
+    return jsonify(isAvailable=is_available)
+
+
+@user_bp.route("/check-email", methods=["POST"])
+def check_email():
+    data = request.get_json()
+    email = data.get("email")
+    is_available = user_controller.check_email_availability(email)
+    return jsonify(isAvailable=is_available)

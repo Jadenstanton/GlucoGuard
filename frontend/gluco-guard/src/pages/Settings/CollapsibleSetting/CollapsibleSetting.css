@@ -1,0 +1,92 @@
+.collapsible-setting {
+    margin-bottom: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    /* max-width: 600px; Adjust as needed */
+    width: 100%; 
+    /* margin: auto; Center the setting */
+    transition: max-height 0.3s ease-in-out;
+    
+  }
+  
+  .collapsible-setting-show {
+    animation: settingSlideDown 300ms ease-in-out forwards;
+  }
+  
+  .collapsible-setting-hide {
+    animation: settingSlideUp 300ms ease-in-out forwards;
+  }
+
+@keyframes settingSlideDown {
+    0% {
+      max-height: 40px;
+    }
+    100% {
+      max-height: 1000px; 
+    }
+  }
+  
+  @keyframes settingSlideUp {
+    0% {
+      max-height: 1000px; 
+    }
+    100% {
+      max-height: 30px;
+    }
+  }
+  .collapsible-button {
+    width: 100%;
+    padding: 10px 15px;
+    text-align: left;
+    background: #ffbe4f;
+    border: none;
+    border-bottom: 1px solid #ddd;
+    border-radius: 4px 4px 4px 4px;
+    outline: none;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  
+  .collapsible-button:hover,
+  .collapsible-button:focus {
+    background: #ffbe4fd8;
+  }
+  
+  .collapsible-content {
+    padding: 10px 15px;
+    border-top: none;
+    animation: slideDown 300ms ease-in-out forwards;
+  }
+  
+  @keyframes slideDown {
+    0% {
+      transform: scaleY(0);
+      transform-origin: top;
+    }
+    100% {
+      transform: scaleY(1);
+      transform-origin: top;
+    }
+  }
+
+  @keyframes slideUp {
+    0% {
+      transform: scaleY(1);
+      transform-origin: top;
+    }
+    100% {
+      transform: scaleY(0);
+      transform-origin: top;
+    }
+  }
+  
+  .collapsible-content-show {
+    display: block;
+    animation: slideDown 300ms ease-in-out forwards;
+  }
+  
+  .collapsible-content-hide {
+    display: block;
+    animation: slideUp 300ms ease-in-out forwards;
+  }
+  

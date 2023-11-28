@@ -3,11 +3,26 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { AuthProvider } from './context/AuthContext';
+import { NutritionProvider } from './context/NutritionContext';
+import { ActivityProvider } from './context/ActivityContext';
+import { CombinedActivityProvider } from './context/CombinedActivityContext';
+import { BaseMetricsProvider } from './context/BaseMetricsContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <AuthProvider>
+      <NutritionProvider>
+        <ActivityProvider>
+          <CombinedActivityProvider>
+            <BaseMetricsProvider>
+              <App />
+            </BaseMetricsProvider>
+          </CombinedActivityProvider>
+        </ActivityProvider>
+      </NutritionProvider>
+    </AuthProvider>
   </React.StrictMode>
 );
 

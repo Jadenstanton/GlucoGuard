@@ -1,0 +1,28 @@
+.auth-container {
+  width: 80vw;
+  height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 50px;
+  overflow: hidden;
+}
+
+.login-panel {
+  flex: 7;
+  transition: flex 0.5s ease-in-out;
+}
+
+.register-panel {
+  flex: 3;
+  transition: flex 0.5s ease-in-out;
+}
+
+.login-panel.shirnk {
+  flex: 3;
+}
+
+.register-panel.expand {
+  flex: 7;
+}
