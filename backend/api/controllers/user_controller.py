@@ -74,6 +74,7 @@ class UserController:
                 "message": "User registered successfully",
                 "token": jwt_token,
                 "userId": new_user.id,
+                "username": new_user.username,
             }, 201
         except Exception as e:
             self.db.session.rollback()
